@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Run</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="headline_login"><u>log in</u>.</string>
+</resources>
