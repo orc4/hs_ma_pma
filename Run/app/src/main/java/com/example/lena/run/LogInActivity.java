@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LogInActivity extends AppCompatActivity {
-    Typeface custom_font;
     private View mContentView;
 
     @Override
@@ -27,18 +26,6 @@ public class LogInActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-
-        custom_font = Typeface.createFromAsset(getAssets(), "fonts/AdventPro-Regular.ttf");
-        Button b = (Button)findViewById(R.id.logInButton);
-        b.setTypeface(custom_font);
-        EditText e1 = (EditText)findViewById(R.id.nameTextField);
-        e1.setTypeface(custom_font);
-        EditText e2 = (EditText)findViewById(R.id.passwordTextField);
-        e2.setTypeface(custom_font);
-        TextView tv = (TextView)findViewById(R.id.logInHeadline);
-        tv.setTypeface(custom_font);
-        Button b2 = (Button)findViewById(R.id.registerButton);
-        b2.setTypeface(custom_font);
     }
 
     public void onButtonNextActivityClick(final View view){

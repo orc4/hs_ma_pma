@@ -10,12 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class ChallengeActivity extends Activity {
-    Typeface custom_font;
     ListView lv;
     Context context;
 
-    public static int[] prgmImages = {R.drawable.buschkind};
-    public static String[] prgmNameList = {"first challenge"};
+    public static int[] prgmImages = {R.drawable.buschkind, R.drawable.ehrensache};
+    public static String[] prgmNameList = {"Buschkind", "Ehrensache"};
 
 
     @Override
@@ -23,11 +22,7 @@ public class ChallengeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
 
-        custom_font = Typeface.createFromAsset(getAssets(), "fonts/AdventPro-Regular.ttf");
-        TextView tv = (TextView) findViewById(R.id.challengeHeadline);
-        tv.setTypeface(custom_font);
         context = this;
-
         lv = (ListView) findViewById(R.id.listview);
         lv.setAdapter(new ChallengeAdapter(this, prgmNameList, prgmImages));
     }

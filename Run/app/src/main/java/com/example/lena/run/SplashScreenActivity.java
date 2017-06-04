@@ -17,7 +17,6 @@ import android.widget.Toast;
  */
 public class SplashScreenActivity extends AppCompatActivity {
     private View mContentView;
-    Typeface custom_font;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +31,14 @@ public class SplashScreenActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/AdventPro-Regular.ttf");
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        new CountDownTimer(3000,1000) {
+        new CountDownTimer(1000,1000) {
             public void onTick(long millisUntilFinished) {
             }
             public void onFinish() {

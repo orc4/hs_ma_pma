@@ -3,23 +3,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="1">
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_gravity="center"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="5dp"
-        android:src="@drawable/logo" />
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/logo"/>
 
     <TextView
         android:id="@+id/textView1"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:text="TextView"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:text="TextView"/>
 
 </LinearLayout>

@@ -2,7 +2,6 @@ package com.example.lena.run;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,12 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CustomAdapter extends BaseAdapter{
+public class MainMenuAdapter extends BaseAdapter{
     String [] result;
     Context context;
     int [] imageId;
     private static LayoutInflater inflater=null;
-    public CustomAdapter(Activity activity, String[] prgmNameList, int[] prgmImages) {
+    public MainMenuAdapter(Activity activity, String[] prgmNameList, int[] prgmImages) {
         // TODO Auto-generated constructor stub
         result=prgmNameList;
         context=activity;
@@ -53,7 +52,7 @@ public class CustomAdapter extends BaseAdapter{
         // TODO Auto-generated method stub
         Holder holder = new Holder();
         View rowView;
-        rowView = inflater.inflate(R.layout.program_list, null);
+        rowView = inflater.inflate(R.layout.menu_list, null);
         holder.tv = (TextView) rowView.findViewById(R.id.textView1);
         holder.img = (ImageView) rowView.findViewById(R.id.imageView1);
         holder.tv.setText(result[position]);

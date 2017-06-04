@@ -54,8 +54,8 @@ public class ChallengeAdapter extends BaseAdapter{
         Holder holder = new Holder();
         View rowView;
         rowView = inflater.inflate(R.layout.challenge_list, null);
-        holder.tv = (TextView) rowView.findViewById(R.id.textView1);
-        holder.img = (ImageView) rowView.findViewById(R.id.imageView1);
+        holder.tv = (TextView) rowView.findViewById(R.id.challengeName);
+        holder.img = (ImageView) rowView.findViewById(R.id.challengeImage);
         holder.tv.setText(result[position]);
         holder.img.setImageResource(imageId[position]);
         rowView.setOnClickListener(new OnClickListener() {

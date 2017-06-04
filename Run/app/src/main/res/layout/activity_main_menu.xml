@@ -26,12 +26,12 @@
         app:layout_constraintTop_toBottomOf="@id/mainMenuHeadline"
         app:layout_constraintLeft_toLeftOf="@id/logInActivity"
         app:layout_constraintRight_toRightOf="@id/logInActivity"
-        android:src="@drawable/line"
+        android:src="@drawable/line_grey"
         />
 
     <ListView
         android:id="@+id/listview"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/line"
