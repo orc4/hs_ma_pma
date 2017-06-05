@@ -1,6 +1,7 @@
-package de.hsmannheim.pma.run;
+package de.hsmannheim.pma.run.uiparts;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,6 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import de.hsmannheim.pma.run.ChallengeMapsActivity;
+import de.hsmannheim.pma.run.R;
+import de.hsmannheim.pma.run.model.Challenge;
+import de.hsmannheim.pma.run.model.MyCredentials;
 
 public class ChallengeAdapter extends BaseAdapter{
     String [] result;
@@ -69,4 +75,18 @@ public class ChallengeAdapter extends BaseAdapter{
         });
         return rowView;
     }
+
+    /*Hier wie man eine Challenge aufruft:
+    Intent intent = new Intent(context,ChallengeMapsActivity.class);
+        //Entweder neue erstellen - route geht über routenId online
+        Challenge challenge = new Challenge("First", "Schefflenz", "bisschen laufen","http://getraenke-letzguss.de/plugins/system/jat3/jat3/base-themes/default/images/favicon.ico",60,100,20);
+        //Alternativ Liste über webconnection holen und dann durchgehen und anzeigen - für die Liste passt das eher
+        List<Challenge> list = webConnection.getAllChallanges();
+
+        intent.putExtra("challenge", challenge);
+        intent.putExtra("credentials",new MyCredentials("aaron","muster"));
+
+        //  startActivity(intent);
+        startActivityForResult(intent,RESULT_ID_ROUTE_TRACKING);
+     */
 }

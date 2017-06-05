@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import de.hsmannheim.pma.run.uiparts.TypefaceUtil;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -16,6 +19,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(this.getClass().toString(), "onCreate: create");
 
         setContentView(R.layout.activity_splash_screen);
 

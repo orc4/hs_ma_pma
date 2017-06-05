@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
+
+import de.hsmannheim.pma.run.uiparts.MainMenuAdapter;
 
 public class MainMenuActivity extends Activity {
     ListView lv;
@@ -19,6 +23,12 @@ public class MainMenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //FIXME: Muss raus - nur zum umgehen von download problemen
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+
+        Log.i(this.getClass().toString(), "onCreate: create");
         setContentView(R.layout.activity_main_menu);
 
         context = this;

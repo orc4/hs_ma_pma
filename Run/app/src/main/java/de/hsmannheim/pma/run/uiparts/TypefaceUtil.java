@@ -1,4 +1,4 @@
-package de.hsmannheim.pma.run;
+package de.hsmannheim.pma.run.uiparts;
 
 import android.content.Context;
 import android.graphics.Typeface;

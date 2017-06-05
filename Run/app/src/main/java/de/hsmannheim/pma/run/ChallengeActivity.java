@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
+
+import de.hsmannheim.pma.run.uiparts.ChallengeAdapter;
 
 public class ChallengeActivity extends Activity {
     ListView lv;
@@ -19,6 +22,7 @@ public class ChallengeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(this.getClass().toString(), "onCreate: create");
         setContentView(R.layout.activity_challenge);
 
         context = this;
