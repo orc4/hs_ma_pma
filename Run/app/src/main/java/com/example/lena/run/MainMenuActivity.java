@@ -2,9 +2,11 @@ package com.example.lena.run;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -12,8 +14,8 @@ public class MainMenuActivity extends Activity {
     ListView lv;
     Context context;
 
-    public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.trophys};
-    public static String[] prgmNameList = {"challenges", "log", "trophäen"};
+    public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.trophys ,R.drawable.tracking};
+    public static String[] prgmNameList = {"challenges", "log", "trophäen", "tracking"};
 
 
     @Override
@@ -31,5 +33,10 @@ public class MainMenuActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.activity_main_menu, menu);
         return true;
+    }
+
+    public void onProfileButtonClick(View view){
+        Intent myIntent = new Intent(this, ProfileActivity.class);
+        startActivity(myIntent);
     }
 }
