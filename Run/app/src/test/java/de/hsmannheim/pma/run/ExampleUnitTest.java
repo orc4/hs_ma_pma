@@ -1,4 +1,4 @@
-package com.example.lena.run;
+package de.hsmannheim.pma.run;
 
 import org.junit.Test;
 

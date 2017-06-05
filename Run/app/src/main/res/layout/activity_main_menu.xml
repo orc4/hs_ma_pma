@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:id="@+id/mainMenuActivity"
-    tools:context="com.example.lena.run.MainMenuActivity">
+    tools:context="de.hsmannheim.pma.run.MainMenuActivity">
 
     <TextView
         android:id="@+id/mainMenuHeadline"

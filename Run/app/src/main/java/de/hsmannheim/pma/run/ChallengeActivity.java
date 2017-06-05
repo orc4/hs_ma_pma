@@ -1,31 +1,29 @@
-package com.example.lena.run;
+package de.hsmannheim.pma.run;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
-public class MainMenuActivity extends Activity {
+public class ChallengeActivity extends Activity {
     ListView lv;
     Context context;
 
-    public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.trophys ,R.drawable.tracking};
-    public static String[] prgmNameList = {"challenges", "log", "trophäen", "tracking"};
+    public static int[] prgmImages = {R.drawable.buschkind, R.drawable.ehrensache};
+    public static String[] prgmNameList = {"Buschkind", "Ehrensache"};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_challenge);
 
         context = this;
         lv = (ListView) findViewById(R.id.listview);
-        lv.setAdapter(new MainMenuAdapter(this, prgmNameList, prgmImages));
+        lv.setAdapter(new ChallengeAdapter(this, prgmNameList, prgmImages));
     }
 
     @Override

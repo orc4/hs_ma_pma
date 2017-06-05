@@ -1,15 +1,9 @@
-package com.example.lena.run;
+package de.hsmannheim.pma.run;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class LogInActivity extends Activity {
     private View mContentView;

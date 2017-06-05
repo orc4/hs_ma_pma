@@ -1,7 +1,6 @@
-package com.example.lena.run;
+package de.hsmannheim.pma.run;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class ProfileActivity extends Activity {

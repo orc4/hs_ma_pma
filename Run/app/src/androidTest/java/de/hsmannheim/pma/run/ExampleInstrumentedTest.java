@@ -1,4 +1,4 @@
-package com.example.lena.run;
+package de.hsmannheim.pma.run;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.lena.run", appContext.getPackageName());
+        assertEquals("de.hsmannheim.pma.run", appContext.getPackageName());
     }
 }

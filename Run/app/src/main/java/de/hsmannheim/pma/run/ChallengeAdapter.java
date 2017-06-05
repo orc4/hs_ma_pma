@@ -1,7 +1,6 @@
-package com.example.lena.run;
+package de.hsmannheim.pma.run;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,12 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainMenuAdapter extends BaseAdapter{
+public class ChallengeAdapter extends BaseAdapter{
     String [] result;
     Context context;
     int [] imageId;
     private static LayoutInflater inflater=null;
-    public MainMenuAdapter(Activity activity, String[] prgmNameList, int[] prgmImages) {
+    public ChallengeAdapter(Activity activity, String[] prgmNameList, int[] prgmImages) {
         // TODO Auto-generated constructor stub
         result=prgmNameList;
         context=activity;
@@ -52,9 +51,9 @@ public class MainMenuAdapter extends BaseAdapter{
         // TODO Auto-generated method stub
         Holder holder = new Holder();
         View rowView;
-        rowView = inflater.inflate(R.layout.menu_list, null);
-        holder.tv = (TextView) rowView.findViewById(R.id.textView1);
-        holder.img = (ImageView) rowView.findViewById(R.id.imageView1);
+        rowView = inflater.inflate(R.layout.challenge_list, null);
+        holder.tv = (TextView) rowView.findViewById(R.id.challengeName);
+        holder.img = (ImageView) rowView.findViewById(R.id.challengeImage);
         holder.tv.setText(result[position]);
         holder.img.setImageResource(imageId[position]);
         rowView.setOnClickListener(new OnClickListener() {
@@ -64,15 +63,10 @@ public class MainMenuAdapter extends BaseAdapter{
                 Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_LONG).show();
                 if (result[position].contentEquals("challenges"))
                 {
-                    onChallengesClick();
+                    //onChallengesClick();
                 }
             }
         });
         return rowView;
-    }
-
-    public void onChallengesClick(){
-        Intent myIntent = new Intent(context, ChallengeActivity.class);
-        context.startActivity(myIntent);
     }
 }

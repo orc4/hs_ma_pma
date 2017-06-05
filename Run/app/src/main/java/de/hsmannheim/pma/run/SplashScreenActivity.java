@@ -1,4 +1,4 @@
-package com.example.lena.run;
+package de.hsmannheim.pma.run;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
