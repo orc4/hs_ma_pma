@@ -9,15 +9,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import de.hsmannheim.pma.run.model.MyCredentials;
 
 import de.hsmannheim.pma.run.uiparts.MainMenuAdapter;
 
 public class MainMenuActivity extends Activity {
     ListView lv;
     Context context;
+    protected MyCredentials myCredentials;
 
-    public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.trophys ,R.drawable.tracking};
-    public static String[] prgmNameList = {"challenges", "log", "trophäen", "tracking"};
+    public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.tracking};
+    public static String[] prgmNameList = {"challenges", "log", "tracking"};
 
 
     @Override
@@ -31,9 +35,13 @@ public class MainMenuActivity extends Activity {
         Log.i(this.getClass().toString(), "onCreate: create");
         setContentView(R.layout.activity_main_menu);
 
+        myCredentials = getIntent().getExtras().getParcelable("creds");
+        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_LONG).show();
+
         context = this;
         lv = (ListView) findViewById(R.id.listview);
-        lv.setAdapter(new MainMenuAdapter(this, prgmNameList, prgmImages));
+        lv.setAdapter(new MainMenuAdapter(this, prgmNameList, prgmImages, myCredentials));
+
     }
 
     @Override
@@ -45,6 +53,7 @@ public class MainMenuActivity extends Activity {
 
     public void onProfileButtonClick(View view){
         Intent myIntent = new Intent(this, ProfileActivity.class);
+        myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);
     }
 }

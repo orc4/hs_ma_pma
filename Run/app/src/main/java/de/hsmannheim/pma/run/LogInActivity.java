@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.uiparts.TypefaceUtil;
 
 /**
@@ -19,7 +20,6 @@ import de.hsmannheim.pma.run.uiparts.TypefaceUtil;
 public class LogInActivity extends FragmentActivity {
     SplashFragment splashFragment;
     LogInFragment logInFragment;
-    private View mContentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +53,10 @@ public class LogInActivity extends FragmentActivity {
         }.start();
     }
 
-    public void onButtonNextActivityClick(View view) {
+    public void onLogInClick(View view) {
         Intent myIntent = new Intent(this, MainMenuActivity.class);
+        MyCredentials myCredentials = new MyCredentials("aaron","muster");
+        myIntent.putExtra("creds", myCredentials);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(myIntent);
     }

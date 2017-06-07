@@ -67,14 +67,13 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:text="anmelden"
-            android:onClick="onButtonNextActivityClick"/>
+            android:onClick="onLogInClick"/>
 
         <Button
             android:id="@+id/registerButton"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="registrieren"
-            android:onClick="onButtonNextActivityClick"/>
+            android:text="registrieren"/>
     </LinearLayout>
 </FrameLayout>
 

@@ -16,7 +16,7 @@ import de.hsmannheim.pma.run.R;
 import de.hsmannheim.pma.run.model.Challenge;
 import de.hsmannheim.pma.run.model.MyCredentials;
 
-public class ChallengeAdapter extends BaseAdapter{
+public class LogAdapter extends BaseAdapter{
     String [] result;
     String [] descriptions;
     Context context;
@@ -24,10 +24,10 @@ public class ChallengeAdapter extends BaseAdapter{
     MyCredentials myCredentials;
 
     private static LayoutInflater inflater=null;
-    public ChallengeAdapter(Activity activity, String[] prgmNameList, String[] descriptionList, int[] prgmImages, MyCredentials cred) {
+    public LogAdapter(Activity activity, String[] challengeOrTrackingList, String[] dateList, int[] prgmImages, MyCredentials cred) {
         // TODO Auto-generated constructor stub
-        result=prgmNameList;
-        descriptions = descriptionList;
+        result=challengeOrTrackingList;
+        descriptions = dateList;
         context=activity;
         imageId=prgmImages;
         myCredentials = cred;
@@ -63,10 +63,10 @@ public class ChallengeAdapter extends BaseAdapter{
         // TODO Auto-generated method stub
         final Holder holder = new Holder();
         View rowView;
-        rowView = inflater.inflate(R.layout.challenge_list, null);
-        holder.tv = (TextView) rowView.findViewById(R.id.challengeName);
-        holder.tv2 = (TextView) rowView.findViewById(R.id.challengeDetails);
-        holder.img = (ImageView) rowView.findViewById(R.id.challengeImage);
+        rowView = inflater.inflate(R.layout.log_list, null);
+        holder.tv = (TextView) rowView.findViewById(R.id.challengeOrTrackingName);
+        holder.tv2 = (TextView) rowView.findViewById(R.id.challengeOrTrackingDetails);
+        holder.img = (ImageView) rowView.findViewById(R.id.challengeOrTrackingImage);
         holder.tv.setText(result[position]);
         holder.tv2.setText(descriptions[position]);
         holder.img.setImageResource(imageId[position]);
@@ -81,22 +81,6 @@ public class ChallengeAdapter extends BaseAdapter{
     }
 
     public void onChallengesClick(String chosenChallenge){
-        //Intent myIntent = new Intent(context, ChallengeMapsActivity.class);
-        //myIntent.putExtra("creds", myCredentials);
-        //context.startActivity(myIntent);
+        //addChallengeToPool()
     }
-
-    /*Hier wie man eine Challenge aufruft:
-    Intent intent = new Intent(context,ChallengeMapsActivity.class);
-        //Entweder neue erstellen - route geht über routenId online
-        Challenge challenge = new Challenge("First", "Schefflenz", "bisschen laufen","http://getraenke-letzguss.de/plugins/system/jat3/jat3/base-themes/default/images/favicon.ico",60,100,20);
-        //Alternativ Liste über webconnection holen und dann durchgehen und anzeigen - für die Liste passt das eher
-        List<Challenge> list = webConnection.getAllChallanges();
-
-        intent.putExtra("challenge", challenge);
-        intent.putExtra("credentials",new MyCredentials("aaron","muster"));
-
-        //  startActivity(intent);
-        startActivityForResult(intent,RESULT_ID_ROUTE_TRACKING);
-     */
 }

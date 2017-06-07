@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import de.hsmannheim.pma.run.ChallengeActivity;
+import de.hsmannheim.pma.run.LogActivity;
 import de.hsmannheim.pma.run.R;
 import de.hsmannheim.pma.run.ShowMapActivity;
 import de.hsmannheim.pma.run.TrackingActivity;
@@ -24,14 +25,16 @@ public class MainMenuAdapter extends BaseAdapter{
     String [] result;
     Context context;
     int [] imageId;
+    MyCredentials myCredentials;
     private static LayoutInflater inflater=null;
-    public MainMenuAdapter(Activity activity, String[] prgmNameList, int[] prgmImages) {
+    public MainMenuAdapter(Activity activity, String[] prgmNameList, int[] prgmImages, MyCredentials credentials) {
         // TODO Auto-generated constructor stub
         result=prgmNameList;
         context=activity;
         imageId=prgmImages;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        myCredentials = credentials;
     }
     @Override
     public int getCount() {
@@ -69,8 +72,6 @@ public class MainMenuAdapter extends BaseAdapter{
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_LONG).show();
                 if (result[position].contentEquals("challenges"))
                 {
                     onChallengesClick();
@@ -91,17 +92,14 @@ public class MainMenuAdapter extends BaseAdapter{
 
     public void onChallengesClick(){
         Intent myIntent = new Intent(context, ChallengeActivity.class);
+        myIntent.putExtra("creds", myCredentials);
         context.startActivity(myIntent);
     }
 
     public void onLogClick(){
-        MyCredentials cred = new MyCredentials("aaron","muster");
-        //TODO: hier mal synchron im Main laden - sollte im Hintergrund laufen - klappt nur im nicht strict mode
-        WebConnection webConnection = new WebConnectionImpl(cred);
-        Route route = webConnection.getRoute(20);
-        Intent intent = new Intent(context,ShowMapActivity.class);
-        intent.putExtra("route", route);
-        context.startActivity(intent);
+        Intent myIntent = new Intent(context, LogActivity.class);
+        myIntent.putExtra("creds", myCredentials);
+        context.startActivity(myIntent);
     }
 
     public void onTrackingClick(){
