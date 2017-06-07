@@ -277,4 +277,9 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10, locationListener);
     }
+
+    public void challengeDone(View view){
+        Intent myIntent = new Intent(this, ChallengeDoneActivity.class);
+        this.startActivity(myIntent);
+    }
 }

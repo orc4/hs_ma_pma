@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:padding="10dp"
+    tools:context="de.hsmannheim.pma.run.LogInActivity"
+    android:id="@+id/logInFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@id/logInFragment"
+        app:layout_constraintRight_toRightOf="@id/logInFragment">
+
+        <TextView
+            android:id="@+id/logInHeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="log in"
+            android:textSize="45dp"/>
+
+        <ImageView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/line_grey"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="100dp">
+        <ImageView
+            android:id="@+id/loginImage"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:src="@drawable/login"
+            app:layout_constraintTop_toBottomOf="@id/line"/>
+
+        <EditText
+            android:id="@+id/nameTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="username"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/loginImage"
+            app:layout_constraintLeft_toLeftOf="@id/logInFragment"
+            app:layout_constraintRight_toRightOf="@id/logInFragment"/>
+
+        <EditText
+            android:id="@+id/passwordTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="passwort"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/logInButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="anmelden"
+            android:onClick="onButtonNextActivityClick"/>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="registrieren"
+            android:onClick="onButtonNextActivityClick"/>
+    </LinearLayout>
+</FrameLayout>
+

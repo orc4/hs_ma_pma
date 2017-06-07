@@ -67,13 +67,15 @@ public class ChallengeAdapter extends BaseAdapter{
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_LONG).show();
-                if (result[position].contentEquals("challenges"))
-                {
-                    //onChallengesClick();
-                }
+                onChallengesClick(result[position]);
             }
         });
         return rowView;
+    }
+
+    public void onChallengesClick(String chosenChallenge){
+        //Intent myIntent = new Intent(context, ChallengeMapsActivity.class);
+        //context.startActivity(myIntent);
     }
 
     /*Hier wie man eine Challenge aufruft:
