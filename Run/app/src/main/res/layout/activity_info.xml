@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.hsmannheim.pma.run.InfoActivity"
+    android:id="@+id/infoActivity"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/profileHeadline"
+        android:layout_width="308dp"
+        android:layout_height="wrap_content"
+        android:text="info"
+        android:textSize="45dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <ImageView
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:src="@drawable/line_grey"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileHeadline" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line"
+        android:layout_marginTop="30dp"
+        android:id="@+id/row">
+
+        <ImageView
+            android:id="@+id/lena"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/lena"></ImageView>
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/logo"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"></ImageView>
+        <ImageView
+            android:id="@+id/aaron"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/aaron"></ImageView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/infoblock"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:text="Im Rahmen des Projektseminars Mobile Anwendungen an der Hochschule Mannheim haben wir eine Anwendung für alle entwickelt, die gerne laufen, wandern, die Umgebung erkunden - und Mannheim lieben.\nUn jetz laaf los!"
+        android:textSize="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/row"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:text="RUN²\n06/2017\nAaron Letzguss | Lena Serdarusic\nProjektseminar Mobile Anwendungen\nHS Mannheim"
+        android:textSize="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoblock"
+        android:layout_marginTop="30dp"/>
+
+</android.support.constraint.ConstraintLayout>

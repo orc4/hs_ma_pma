@@ -31,7 +31,7 @@
         <activity android:name=".TrackingActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".ChallengeActivity" />
-        <activity android:name=".LogActivity"/>
+        <activity android:name=".LogActivity" />
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -51,6 +51,7 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".ChallengeDoneActivity" />
+        <activity android:name=".InfoActivity"></activity>
     </application>
 
 </manifest>

@@ -61,7 +61,7 @@ public class ChallengeAdapter extends BaseAdapter{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
-        final Holder holder = new Holder();
+        Holder holder = new Holder();
         View rowView;
         rowView = inflater.inflate(R.layout.challenge_list, null);
         holder.tv = (TextView) rowView.findViewById(R.id.challengeName);
@@ -82,7 +82,6 @@ public class ChallengeAdapter extends BaseAdapter{
 
     public void onChallengesClick(String chosenChallenge){
         //Intent myIntent = new Intent(context, ChallengeMapsActivity.class);
-        //myIntent.putExtra("creds", myCredentials);
         //context.startActivity(myIntent);
     }
 

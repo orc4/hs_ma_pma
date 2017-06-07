@@ -30,10 +30,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.Date;
 import java.util.List;
 
+import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.model.Route;
 
 
 public class TrackingActivity extends FragmentActivity implements OnMapReadyCallback {
+    MyCredentials myCredentials;
 
     //TODO: Location von GPS + Network nehmen und die bessere nehmen
 
@@ -73,7 +75,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
             }
             return false;
         } else {
-            Toast.makeText(this, "We Have Permissions", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "We Have Permissions", Toast.LENGTH_SHORT).show();
             return true;
         }
     }
@@ -107,6 +109,9 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     //Real Start of App!
     private void initPhase1() {
         setContentView(R.layout.activity_maps);
+
+        myCredentials = getIntent().getExtras().getParcelable("creds");
+        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_LONG).show();
 
         startButton = (Button) findViewById(R.id.buttonStart);
         stopButton = (Button) findViewById(R.id.buttonStop);
@@ -242,5 +247,11 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         Log.i(this.getClass().toString(), "Location Manager initialisiert");
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10, locationListener);
+    }
+
+    public void onProfileButtonClick(View view){
+        Intent myIntent = new Intent(this, ProfileActivity.class);
+        myIntent.putExtra("creds", myCredentials);
+        startActivity(myIntent);
     }
 }

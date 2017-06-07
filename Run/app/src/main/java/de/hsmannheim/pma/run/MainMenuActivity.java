@@ -20,8 +20,8 @@ public class MainMenuActivity extends Activity {
     Context context;
     protected MyCredentials myCredentials;
 
-    public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.tracking};
-    public static String[] prgmNameList = {"challenges", "log", "tracking"};
+    public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.tracking, R.drawable.info};
+    public static String[] prgmNameList = {"challenges", "log", "tracking", "info"};
 
 
     @Override

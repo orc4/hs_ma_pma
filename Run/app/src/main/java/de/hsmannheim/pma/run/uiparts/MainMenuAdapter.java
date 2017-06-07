@@ -2,6 +2,7 @@ package de.hsmannheim.pma.run.uiparts;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import de.hsmannheim.pma.run.ChallengeActivity;
+import de.hsmannheim.pma.run.InfoActivity;
 import de.hsmannheim.pma.run.LogActivity;
 import de.hsmannheim.pma.run.R;
 import de.hsmannheim.pma.run.ShowMapActivity;
@@ -84,6 +86,10 @@ public class MainMenuAdapter extends BaseAdapter{
                 {
                     onTrackingClick();
                 }
+                if (result[position].contentEquals("info"))
+                {
+                    onInfoClick();
+                }
 
             }
         });
@@ -102,8 +108,14 @@ public class MainMenuAdapter extends BaseAdapter{
         context.startActivity(myIntent);
     }
 
+    public void onInfoClick(){
+        Intent myIntent = new Intent(context, InfoActivity.class);
+        context.startActivity(myIntent);
+    }
+
     public void onTrackingClick(){
         Intent myIntent = new Intent(context, TrackingActivity.class);
+        myIntent.putExtra("creds", myCredentials);
         context.startActivity(myIntent);
         //Hier ein Beispiel wie das mit onActivity Result klappt
         /*
