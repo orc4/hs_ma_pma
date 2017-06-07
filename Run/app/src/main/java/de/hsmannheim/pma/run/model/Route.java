@@ -19,6 +19,7 @@ public class Route implements Parcelable {
     private ArrayList<Double> wayPointsAltitude=new ArrayList<>();
     private ArrayList<Date> wayPointsDates=new ArrayList<>();
     private Date startDate;
+    private String createUser;
 
     public static final Creator<Route> CREATOR =
             new Creator<Route>() {
@@ -31,11 +32,21 @@ public class Route implements Parcelable {
                 }
             };
 
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
     private Route(Parcel in) {
         in.readList(wayPoints, LatLng.class.getClassLoader());
         in.readList(wayPointsAltitude, Double.class.getClassLoader());
         in.readList(wayPointsDates, Date.class.getClassLoader());
         startDate = (Date) in.readSerializable();
+        createUser=in.readString();
+
     }
 
     public void writeToParcel(Parcel out, int flags) {
@@ -43,6 +54,7 @@ public class Route implements Parcelable {
         out.writeList(wayPointsAltitude);
         out.writeList(wayPointsDates);
         out.writeSerializable(startDate);
+        out.writeString(createUser);
     }
     public Route(Date startDate){
         this.startDate=startDate;

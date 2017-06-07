@@ -86,6 +86,8 @@ public class WebConnectionImpl implements WebConnection {
 
     @Override
     public int addRoute(Route route) {
+        //Setzen des Users
+        route.setCreateUser(myCredentials.getUsername());
         String json = gson.toJson(route);
         String url = SERVER_CONNECTION + "/add_route.php";
         String result = DownloadHandler.makeRequest(url, json);
@@ -114,4 +116,25 @@ public class WebConnectionImpl implements WebConnection {
 
         return challenges;
     }
+
+    @Override
+    public void setChallengeChecked(Challenge challenge) {
+        //http://www.orc4.de/pma/add_challenge_user.php?username=aaron&challenge=5
+        String url = SERVER_CONNECTION + "/add_challenge_user.php?username=" + myCredentials.getUsername()+"&challenge="+challenge.getId();
+        this.getDownloadHandler().makeServiceCall(url);
+    }
+
+    @Override
+    public boolean checkLogin() {
+        String url = SERVER_CONNECTION + "/get_user_profile.php?username=" + myCredentials.getUsername()+"&password="+myCredentials.getPassword();
+        String result = this.getDownloadHandler().makeServiceCall(url);
+        result=result.trim(); //remove leading and following whitspaces
+        if(result.equals("true")){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 }

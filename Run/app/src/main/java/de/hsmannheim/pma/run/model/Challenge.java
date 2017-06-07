@@ -25,6 +25,8 @@ public class Challenge implements Parcelable {
     protected final int durationInSec;
     protected final int lengthInM;
     protected final int routeId;
+    protected final int id;
+    protected boolean checked;
 
     private Challenge(Parcel in) {
         name = in.readString();
@@ -34,6 +36,8 @@ public class Challenge implements Parcelable {
         durationInSec = in.readInt();
         lengthInM = in.readInt();
         routeId = in.readInt();
+        id= in.readInt();
+        checked  = (in.readInt() == 0) ? false : true;
     }
 
     public void writeToParcel(Parcel out, int flags) {
@@ -44,6 +48,8 @@ public class Challenge implements Parcelable {
         out.writeInt(durationInSec);
         out.writeInt(lengthInM);
         out.writeInt(routeId);
+        out.writeInt(id);
+        out.writeInt(checked ? 1 : 0);
     }
 
     public int describeContents() {
@@ -58,6 +64,14 @@ public class Challenge implements Parcelable {
         this.durationInSec=durationInSec;
         this.lengthInM=lengthInM;
         this.routeId=routeId;
+        this.id=0;
+        this.checked=false;
+
+    }
+
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
