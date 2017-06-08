@@ -80,26 +80,30 @@ public class ChallengeActivity extends Activity {
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_ID_ROUTE_TRACKING_CHALLANGE) {
-            //Handle nachdem das Tracking beendet wurde
-            final Route route = data.getParcelableExtra("route");
-            final Challenge challenge = data.getParcelableExtra("challenge");
-            final RouteAnalyse ra = new RouteAnalyse(route);
-            ra.setChallengeId(challenge.getId());
-            ra.analyseAll();
+            if(data==null){
+                Log.i(this.getClass().toString(), "onActivityResult: Null received");
+            }else{
+                //Handle nachdem das Tracking beendet wurde
+                final Route route = data.getParcelableExtra("route");
+                final Challenge challenge = data.getParcelableExtra("challenge");
+                final RouteAnalyse ra = new RouteAnalyse(route);
+                ra.setChallengeId(challenge.getId());
+                ra.analyseAll();
 
-            //Alles hochladen
-            Thread t = new Thread() {
-                public void run() {
-                    int routeId = webConnection.addRoute(route);
-                    ra.setRouteId(routeId);
-                    webConnection.addRouteAnalyse(ra);
-                    webConnection.setChallengeChecked(challenge);
-                    Log.i(this.getClass().toString(), "onActivityResult: Tracking + Challenge upload Fertig!");
-                }
-            };
-            t.start();
+                //Alles hochladen
+                Thread t = new Thread() {
+                    public void run() {
+                        int routeId = webConnection.addRoute(route);
+                        ra.setRouteId(routeId);
+                        webConnection.addRouteAnalyse(ra);
+                        webConnection.setChallengeChecked(challenge);
+                        Log.i(this.getClass().toString(), "onActivityResult: Tracking + Challenge upload Fertig!");
+                    }
+                };
+                t.start();
 
-            Log.i(this.getClass().toString(), "onActivityResult: hier!");
+                Log.i(this.getClass().toString(), "onActivityResult: hier!");
+            }
         }
     }
 }

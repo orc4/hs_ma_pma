@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import de.hsmannheim.pma.run.ChallengeActivity;
 import de.hsmannheim.pma.run.ChallengeMapsActivity;
+import de.hsmannheim.pma.run.MainMenuActivity;
 import de.hsmannheim.pma.run.R;
 import de.hsmannheim.pma.run.model.Challenge;
 import de.hsmannheim.pma.run.model.MyCredentials;
@@ -24,6 +26,7 @@ public class ChallengeAdapter extends BaseAdapter{
     //String [] result;
     //String [] descriptions;
     Context context;
+    Activity activity;
     int [] imageId;
     MyCredentials myCredentials;
 
@@ -36,6 +39,7 @@ public class ChallengeAdapter extends BaseAdapter{
         imageId=prgmImages;
         myCredentials = cred;
         this.allAvailableChallenges=allAvailableChallenges;
+        this.activity=activity;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -105,7 +109,8 @@ public class ChallengeAdapter extends BaseAdapter{
         intent.putExtra("challenge", chosenChallenge);
         intent.putExtra("credentials",myCredentials);
 
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, ChallengeActivity.RESULT_ID_ROUTE_TRACKING_CHALLANGE);
+
         //Intent myIntent = new Intent(context, ChallengeMapsActivity.class);
         //context.startActivity(myIntent);
     }

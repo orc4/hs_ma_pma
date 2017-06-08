@@ -70,26 +70,29 @@ public class MainMenuActivity extends Activity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_ID_ROUTE_TRACKING) {
-            //Handle nachdem das Tracking beendet wurde
-            final Route route = data.getParcelableExtra("route");
-            final RouteAnalyse ra = new RouteAnalyse(route);
-            ra.analyseAll();
-            Log.i(this.getClass().toString(), "onActivityResult: Meder Down "+ra.getMeterDown());
+            if(data==null){
+                Log.i(this.getClass().toString(), "onActivityResult: Null object als Result bekommen!");
+            }else{
+                //Handle nachdem das Tracking beendet wurde
+                final Route route = data.getParcelableExtra("route");
+                final RouteAnalyse ra = new RouteAnalyse(route);
+                ra.analyseAll();
+                Log.i(this.getClass().toString(), "onActivityResult: Meder Down "+ra.getMeterDown());
 
-            //Alles hochladen
-            Thread t = new Thread() {
-                public void run() {
-                    int routeId = webConnection.addRoute(route);
-                    ra.setRouteId(routeId);
-                    webConnection.addRouteAnalyse(ra);
-                    Log.i(this.getClass().toString(), "onActivityResult: Tracking upload Fertig!");
+                //Alles hochladen
+                Thread t = new Thread() {
+                    public void run() {
+                        int routeId = webConnection.addRoute(route);
+                        ra.setRouteId(routeId);
+                        webConnection.addRouteAnalyse(ra);
+                        Log.i(this.getClass().toString(), "onActivityResult: Tracking upload Fertig!");
+                    }
+                };
+                t.start();
 
+                Log.i(this.getClass().toString(), "onActivityResult: hier!");
+            }
 
-                }
-            };
-            t.start();
-
-            Log.i(this.getClass().toString(), "onActivityResult: hier!");
         }
     }
 }
