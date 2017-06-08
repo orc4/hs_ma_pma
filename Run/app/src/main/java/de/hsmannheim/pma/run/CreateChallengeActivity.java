@@ -9,12 +9,14 @@ import android.view.View;
 import de.hsmannheim.pma.run.model.MyCredentials;
 
 public class CreateChallengeActivity extends Activity {
+    protected GlobalApplication state;
 
     MyCredentials myCredentials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        state = ((GlobalApplication) getApplicationContext());
         myCredentials = getIntent().getExtras().getParcelable("creds");
         setContentView(R.layout.activity_create_challenge);
     }

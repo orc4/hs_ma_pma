@@ -38,7 +38,7 @@ public class LogInActivity extends FragmentActivity {
     EditText password, username;
     Context context = this;
     MyCredentials myCredentials;
-    GlobalApplication state;
+    protected GlobalApplication state;
 
 
     private Handler handler = new Handler() {
@@ -62,11 +62,12 @@ public class LogInActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        state = ((GlobalApplication) getApplicationContext());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_log_in);
 
-        state = ((GlobalApplication) getApplicationContext());
+
 
         splashFragment = new SplashFragment();
         logInFragment = new LogInFragment();

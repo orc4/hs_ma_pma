@@ -20,6 +20,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +60,7 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     protected LocationListener locationListener;
     protected boolean tracking = false;
     protected boolean startReached = false;
+    protected GlobalApplication state;
     private int count = 0;
     private Handler handler = new Handler() {
         @Override
@@ -100,6 +103,7 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        state = ((GlobalApplication) getApplicationContext());
         challenge = getIntent().getExtras().getParcelable("challenge");
         final MyCredentials cred = getIntent().getExtras().getParcelable("credentials");
 
@@ -124,6 +128,8 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     //Real Start of App!
     private void initPhase1() {
         setContentView(R.layout.activity_challange_maps);
+        ImageView userPic = (ImageView) findViewById(R.id.user);
+        userPic.setImageBitmap(state.getProfielImageBitmap());
 
         TextView headline = (TextView) findViewById(R.id.challengeHeadline);
         headline.setText(challenge.getName());

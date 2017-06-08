@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class LogActivity extends Activity {
     Context context;
     Activity logActivity;
     protected MyCredentials myCredentials;
+    protected GlobalApplication state;
 
     private Handler handler = new Handler() {
         @Override
@@ -59,8 +61,11 @@ public class LogActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        state = ((GlobalApplication) getApplicationContext());
         Log.i(this.getClass().toString(), "onCreate: create");
         setContentView(R.layout.activity_log);
+        ImageButton userPic = (ImageButton) findViewById(R.id.user);
+        userPic.setImageBitmap(state.getProfielImageBitmap());
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
         Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_SHORT).show();

@@ -33,6 +33,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
     protected Polyline line;
     protected WebConnection webConnection;
     protected boolean map_Ready = false;
+    protected GlobalApplication state;
 
     protected TextView usernameText;
     protected TextView startDateText;
@@ -54,6 +55,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        state = ((GlobalApplication) getApplicationContext());
         route = getIntent().getExtras().getParcelable("route");
         routeAnalyse = getIntent().getExtras().getParcelable("routeAnalyse");
         myCredentials = getIntent().getExtras().getParcelable("creds");

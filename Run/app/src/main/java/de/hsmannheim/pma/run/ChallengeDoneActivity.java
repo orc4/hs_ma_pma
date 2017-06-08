@@ -13,10 +13,12 @@ public class ChallengeDoneActivity extends Activity {
     protected MyCredentials myCredentials;
     protected Challenge challenge;
     protected RouteAnalyse ra;
+    protected GlobalApplication state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        state = ((GlobalApplication) getApplicationContext());
         setContentView(R.layout.activity_challenge_done);
         myCredentials = getIntent().getExtras().getParcelable("creds");
         challenge = getIntent().getExtras().getParcelable("challenge");

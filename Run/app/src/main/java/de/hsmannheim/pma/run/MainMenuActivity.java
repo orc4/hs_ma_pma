@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +36,10 @@ public class MainMenuActivity extends Activity {
 
         Log.i(this.getClass().toString(), "onCreate: create");
         setContentView(R.layout.activity_main_menu);
+
+        ImageButton userPic = (ImageButton) findViewById(R.id.user);
+        userPic.setImageBitmap(state.getProfielImageBitmap());
+
         myCredentials=state.getMyCredentials();
 
         webConnection = new WebConnectionImpl(myCredentials);

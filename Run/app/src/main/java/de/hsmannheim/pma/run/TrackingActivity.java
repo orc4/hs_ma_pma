@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     LocationListener locationListener;
     boolean tracking = false;
     private int count = 0;
+    protected GlobalApplication state;
 
     private boolean check_permissions() {
         if (ContextCompat.checkSelfPermission(this,
@@ -78,6 +80,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        state = ((GlobalApplication) getApplicationContext());
 
         if (check_permissions()) {
             initPhase1();
@@ -107,7 +110,8 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     //Real Start of App!
     private void initPhase1() {
         setContentView(R.layout.activity_maps);
-
+        ImageButton userPic = (ImageButton) findViewById(R.id.user);
+        userPic.setImageBitmap(state.getProfielImageBitmap());
         myCredentials = getIntent().getExtras().getParcelable("creds");
 
 

@@ -9,6 +9,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class ChallengeActivity extends Activity {
     protected Activity challengeActivity;
     protected WebConnection webConnection;
     protected MyCredentials myCredentials;
+    protected GlobalApplication state;
 
     public static int[] prgmImages = {R.drawable.buschkind, R.drawable.quadratekid};
     private Handler handler = new Handler() {
@@ -49,8 +51,11 @@ public class ChallengeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        state = ((GlobalApplication) getApplicationContext());
         Log.i(this.getClass().toString(), "onCreate: create");
         setContentView(R.layout.activity_challenge);
+        ImageButton userPic = (ImageButton) findViewById(R.id.user);
+        userPic.setImageBitmap(state.getProfielImageBitmap());
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
         webConnection = new WebConnectionImpl(myCredentials);
