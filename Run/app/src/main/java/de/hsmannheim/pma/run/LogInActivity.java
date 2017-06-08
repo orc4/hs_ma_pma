@@ -9,12 +9,9 @@ import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import de.hsmannheim.pma.run.model.MyCredentials;
@@ -79,8 +76,6 @@ public class LogInActivity extends FragmentActivity {
                 fragmentTransaction2.replace(R.id.fragment_container, logInFragment);
                 fragmentTransaction2.commit();
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                 password = (EditText) findViewById(R.id.passwordTextField);
-                 username = (EditText) findViewById(R.id.nameTextField);
             }
         }.start();
     }
