@@ -1,16 +1,25 @@
 package de.hsmannheim.pma.run;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import de.hsmannheim.pma.run.model.MyCredentials;
+import de.hsmannheim.pma.run.storage.WebConnection;
+import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 import de.hsmannheim.pma.run.uiparts.TypefaceUtil;
 
 /**
@@ -20,6 +29,26 @@ import de.hsmannheim.pma.run.uiparts.TypefaceUtil;
 public class LogInActivity extends FragmentActivity {
     SplashFragment splashFragment;
     LogInFragment logInFragment;
+    EditText password, username;
+    Context context = this;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle b = msg.getData();
+            Integer value = b.getInt("KEY");
+
+            if(value==1){
+                Intent myIntent = new Intent(context, MainMenuActivity.class);
+                MyCredentials myCredentials = new MyCredentials("aaron","muster");
+                myIntent.putExtra("creds", myCredentials);
+                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(myIntent);
+            }else{
+                Toast.makeText(context,"login false", Toast.LENGTH_SHORT);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +67,8 @@ public class LogInActivity extends FragmentActivity {
         fragmentTransaction.commit();
 
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/AdventPro-Regular.ttf");
-
-        new CountDownTimer(3000,1000) {
+        //new CountDownTimer(3000,1000)
+        new CountDownTimer(1000,1000) {
             public void onTick(long millisUntilFinished) {
             }
             public void onFinish() {
@@ -49,15 +78,29 @@ public class LogInActivity extends FragmentActivity {
                 fragmentTransaction2.replace(R.id.fragment_container, logInFragment);
                 fragmentTransaction2.commit();
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                 password = (EditText) findViewById(R.id.passwordTextField);
+                 username = (EditText) findViewById(R.id.nameTextField);
             }
         }.start();
     }
 
     public void onLogInClick(View view) {
-        Intent myIntent = new Intent(this, MainMenuActivity.class);
-        MyCredentials myCredentials = new MyCredentials("aaron","muster");
-        myIntent.putExtra("creds", myCredentials);
-        myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(myIntent);
+        password = (EditText) findViewById(R.id.passwordTextField);
+        username = (EditText) findViewById(R.id.nameTextField);
+        String myPassword = password.getText().toString().toLowerCase();
+        String myUsername = username.getText().toString();
+        final WebConnection webConnection = new WebConnectionImpl(new MyCredentials(myUsername, myPassword));
+        Thread t = new Thread() {
+            public void run() {
+                final boolean result = webConnection.checkLogin();
+                final Message msg = new Message();
+                final Bundle b = new Bundle();
+                int bool = (result) ? 1 : 0;
+                b.putInt("KEY", bool);
+                msg.setData(b);
+                handler.sendMessage(msg);
+            }
+        };
+        t.start();
     }
 }

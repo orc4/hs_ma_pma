@@ -126,8 +126,12 @@ public class WebConnectionImpl implements WebConnection {
 
     @Override
     public boolean checkLogin() {
-        String url = SERVER_CONNECTION + "/get_user_profile.php?username=" + myCredentials.getUsername()+"&password="+myCredentials.getPassword();
+        String url = SERVER_CONNECTION + "/login.php?username=" + myCredentials.getUsername()+"&password="+myCredentials.getPassword();
         String result = this.getDownloadHandler().makeServiceCall(url);
+        Log.i(this.getClass().toString(), "checkLogin: raw: "+result);
+        if(result == null){
+            return false;
+        }
         result=result.trim(); //remove leading and following whitspaces
         if(result.equals("true")){
             return true;

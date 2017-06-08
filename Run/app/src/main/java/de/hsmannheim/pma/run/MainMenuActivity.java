@@ -36,7 +36,7 @@ public class MainMenuActivity extends Activity {
         setContentView(R.layout.activity_main_menu);
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
-        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_SHORT).show();
 
         context = this;
         lv = (ListView) findViewById(R.id.listview);
