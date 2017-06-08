@@ -100,6 +100,7 @@ public class LogActivity extends Activity {
             menu.add(0, v.getId(), 0, "challenge erstellen");
         }
         menu.add(0, v.getId(), 0, "details anzeigen");//groupId, itemId, order, title
+
     }
 
     public void onProfileButtonClick(View view){
@@ -118,6 +119,12 @@ public class LogActivity extends Activity {
                 return true;
             case ("details anzeigen"):
                 Intent myIntent2 = new Intent(context, RouteAnalyseActivity.class);
+                Log.i("lala", "onContextItemSelected: itemId"+item.getItemId());
+
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+                Log.d("lala", "item pos=" + info.position);
+
+
                 //route und routeanalyse fehlen
                 myIntent2.putExtra("creds", myCredentials);
                 context.startActivity(myIntent2);
