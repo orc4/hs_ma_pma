@@ -17,14 +17,18 @@ import java.util.List;
 
 import de.hsmannheim.pma.run.model.Challenge;
 import de.hsmannheim.pma.run.model.MyCredentials;
+import de.hsmannheim.pma.run.model.Route;
+import de.hsmannheim.pma.run.model.RouteAnalyse;
 import de.hsmannheim.pma.run.storage.WebConnection;
 import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 import de.hsmannheim.pma.run.uiparts.ChallengeAdapter;
 
 public class ChallengeActivity extends Activity {
-    ListView lv;
-    Context context;
-    Activity challengeActivity;
+    public final static int RESULT_ID_ROUTE_TRACKING_CHALLANGE=1;
+    protected ListView lv;
+    protected Context context;
+    protected Activity challengeActivity;
+    protected WebConnection webConnection;
     protected MyCredentials myCredentials;
 
     public static int[] prgmImages = {R.drawable.buschkind, R.drawable.quadratekid};
@@ -49,6 +53,7 @@ public class ChallengeActivity extends Activity {
         setContentView(R.layout.activity_challenge);
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
+        webConnection = new WebConnectionImpl(myCredentials);
 
         final WebConnection webConnection = new WebConnectionImpl(myCredentials);
         Thread t = new Thread() {
@@ -72,5 +77,29 @@ public class ChallengeActivity extends Activity {
         Intent myIntent = new Intent(this, ProfileActivity.class);
         myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RESULT_ID_ROUTE_TRACKING_CHALLANGE) {
+            //Handle nachdem das Tracking beendet wurde
+            final Route route = data.getParcelableExtra("route");
+            final Challenge challenge = data.getParcelableExtra("challenge");
+            final RouteAnalyse ra = new RouteAnalyse(route);
+            ra.setChallengeId(challenge.getId());
+            ra.analyseAll();
+
+            //Alles hochladen
+            Thread t = new Thread() {
+                public void run() {
+                    int routeId = webConnection.addRoute(route);
+                    ra.setRouteId(routeId);
+                    webConnection.addRouteAnalyse(ra);
+                    webConnection.setChallengeChecked(challenge);
+                    Log.i(this.getClass().toString(), "onActivityResult: Tracking + Challenge upload Fertig!");
+                }
+            };
+            t.start();
+
+            Log.i(this.getClass().toString(), "onActivityResult: hier!");
+        }
     }
 }
