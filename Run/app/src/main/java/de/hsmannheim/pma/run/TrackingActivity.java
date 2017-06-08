@@ -94,6 +94,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
             @Override
             public void onClick(View view) {
                 startTracking();
+                startTimeUpdate();
                 startButton.setBackgroundColor(Color.RED);
             }
         });
@@ -125,15 +126,30 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
 
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    protected void startTimeUpdate(){
+        //TODO: kann raus in eine separate Klasse!
+        Thread refreshThread = new Thread(new Runnable() {
+            TextView textViewTime = (TextView) findViewById(R.id.time);
+            int time=0;
+            public void run() {
+                while (true) {
+                    time = time + 1;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                    }
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            int sec = (int) (time%60);
+                            int min = (int) (time/60);
+                            textViewTime.setText(min+":"+String.format("%02d", sec));
+                        }
+                    });
+                }
+            }
+        });
+        refreshThread.start();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
