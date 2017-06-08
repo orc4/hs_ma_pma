@@ -68,7 +68,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
 
             } else {
                 // No explanation needed, we can request the permission.
-                Toast.makeText(this, "Permission for Location is Required", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Permission for Location is Required", Toast.LENGTH_SHORT).show();
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST);
@@ -111,7 +111,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         setContentView(R.layout.activity_maps);
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
-        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_LONG).show();
+
 
         startButton = (Button) findViewById(R.id.buttonStart);
         stopButton = (Button) findViewById(R.id.buttonStop);

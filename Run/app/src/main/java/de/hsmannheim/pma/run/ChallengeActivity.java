@@ -24,7 +24,7 @@ import de.hsmannheim.pma.run.uiparts.ChallengeAdapter;
 public class ChallengeActivity extends Activity {
     ListView lv;
     Context context;
-    ChallengeActivity challengeActivity;
+    Activity challengeActivity;
     protected MyCredentials myCredentials;
 
     public static int[] prgmImages = {R.drawable.buschkind, R.drawable.quadratekid};
@@ -49,7 +49,7 @@ public class ChallengeActivity extends Activity {
         setContentView(R.layout.activity_challenge);
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
-        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_SHORT).show();
+
         final WebConnection webConnection = new WebConnectionImpl(myCredentials);
         Thread t = new Thread() {
             public void run() {
