@@ -13,7 +13,6 @@ android:id="@+id/trackingActivity">
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:text="tracking"
-    android:textAllCaps="true"
     android:textSize="45dp"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"
