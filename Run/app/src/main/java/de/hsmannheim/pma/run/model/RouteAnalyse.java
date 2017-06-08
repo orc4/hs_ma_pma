@@ -99,7 +99,7 @@ public class RouteAnalyse implements Parcelable {
     }
 
     public void analyseSpeed() {
-        speedKmh = (distance / 1000) / (time / 1000) * 3.6;
+        speedKmh = (distance / 1000d) / (time / 1000d) * 3.6;
         paceMinPerKm = (time / 1000 / 60) / ((distance / 1000)+0.00001);
     }
 
@@ -164,11 +164,9 @@ public class RouteAnalyse implements Parcelable {
                 } else {
                     meterDown += diff;
                 }
-
             }
             lastHigh = high;
         }
-
     }
 
     public void analyseTime(Route route) {

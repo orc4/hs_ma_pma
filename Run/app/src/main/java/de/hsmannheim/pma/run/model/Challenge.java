@@ -22,6 +22,7 @@ public class Challenge implements Parcelable {
     protected final String location;
     protected final String description;
     protected final String picUrl;
+    protected final String finishText;
     protected final int durationInSec;
     protected final int lengthInM;
     protected final int routeId;
@@ -38,6 +39,7 @@ public class Challenge implements Parcelable {
         routeId = in.readInt();
         id= in.readInt();
         checked  = (in.readInt() == 0) ? false : true;
+        finishText = in.readString();
     }
 
     public void writeToParcel(Parcel out, int flags) {
@@ -50,13 +52,14 @@ public class Challenge implements Parcelable {
         out.writeInt(routeId);
         out.writeInt(id);
         out.writeInt(checked ? 1 : 0);
+        out.writeString(finishText);
     }
 
     public int describeContents() {
         return this.hashCode();
     }
 
-    public Challenge(String name, String location, String description, String picUrl, int durationInSec, int lengthInM, int routeId){
+    public Challenge(String name, String location, String description, String picUrl, int durationInSec, int lengthInM, int routeId, String finishText){
         this.name = name;
         this.location=location;
         this.description=description;
@@ -66,9 +69,12 @@ public class Challenge implements Parcelable {
         this.routeId=routeId;
         this.id=0;
         this.checked=false;
-
+        this.finishText=finishText;
     }
 
+    public String getFinishText() {
+        return finishText;
+    }
 
     public boolean isChecked() {
         return checked;

@@ -94,12 +94,20 @@ public class ChallengeActivity extends Activity {
                     public void run() {
                         int routeId = webConnection.addRoute(route);
                         ra.setRouteId(routeId);
+                        Log.i(this.getClass().toString(), "onActivityResult: routeAnalyse "+ra.toString());
                         webConnection.addRouteAnalyse(ra);
                         webConnection.setChallengeChecked(challenge);
                         Log.i(this.getClass().toString(), "onActivityResult: Tracking + Challenge upload Fertig!");
                     }
                 };
                 t.start();
+
+                Intent myIntent = new Intent(context, RouteAnalyseActivity.class);
+                myIntent.putExtra("route",route);
+                myIntent.putExtra("routeAnalyse",ra);
+                myIntent.putExtra("creds",myCredentials);
+                context.startActivity(myIntent);
+
                 Intent intent = new Intent(context, ChallengeDoneActivity.class);
                 intent.putExtra("challenge", challenge);
                 intent.putExtra("routeAnalyse", ra);

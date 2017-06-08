@@ -2,19 +2,16 @@ package de.hsmannheim.pma.run;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.os.CountDownTimer;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import de.hsmannheim.pma.run.model.MyCredentials;
@@ -40,13 +37,13 @@ public class LogInActivity extends FragmentActivity {
             Bundle b = msg.getData();
             Integer value = b.getInt("KEY");
 
-            if(value==1){
+            if (value == 1) {
                 Intent myIntent = new Intent(context, MainMenuActivity.class);
                 myIntent.putExtra("creds", myCredentials);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(myIntent);
-            }else{
-                Toast.makeText(context,"login false", Toast.LENGTH_SHORT);
+            } else {
+                Toast.makeText(context, "login false", Toast.LENGTH_SHORT);
             }
         }
     };
@@ -69,9 +66,10 @@ public class LogInActivity extends FragmentActivity {
 
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/AdventPro-Regular.ttf");
         //new CountDownTimer(3000,1000)
-        new CountDownTimer(1000,1000) {
+        new CountDownTimer(1000, 1000) {
             public void onTick(long millisUntilFinished) {
             }
+
             public void onFinish() {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction2 =
@@ -90,7 +88,8 @@ public class LogInActivity extends FragmentActivity {
         String myUsername = username.getText().toString();
 
         //FIXME: only for debug!
-        myPassword="muster"; myUsername="aaron";
+        myPassword = "muster";
+        myUsername = "aaron";
         myCredentials = new MyCredentials(myUsername, myPassword);
         final WebConnection webConnection = new WebConnectionImpl(myCredentials);
         Thread t = new Thread() {
