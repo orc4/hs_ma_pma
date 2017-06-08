@@ -85,13 +85,8 @@ public class ChallengeAdapter extends BaseAdapter{
         holder.tv.setText(allAvailableChallenges.get(position).getName());
         holder.tv2.setText(allAvailableChallenges.get(position).getDescription());
         //FIXME: die noch aus dem web laden
-        holder.img.setImageResource(imageId[position]);
+        holder.img.setImageResource(imageId[(position%2)]);
 
-        /*
-        holder.tv.setText(result[position]);
-        holder.tv2.setText(descriptions[position]);
-        holder.img.setImageResource(imageId[position]);
-        */
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,29 +98,12 @@ public class ChallengeAdapter extends BaseAdapter{
 
     public void onChallengesClick(Challenge chosenChallenge){
 
-        Toast.makeText(context, "klicked Name: "+chosenChallenge.getName() ,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "klicked Name: "+chosenChallenge.getName() ,Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(context,ChallengeMapsActivity.class);
         intent.putExtra("challenge", chosenChallenge);
         intent.putExtra("credentials",myCredentials);
 
         activity.startActivityForResult(intent, ChallengeActivity.RESULT_ID_ROUTE_TRACKING_CHALLANGE);
-
-        //Intent myIntent = new Intent(context, ChallengeMapsActivity.class);
-        //context.startActivity(myIntent);
     }
-
-    /*Hier wie man eine Challenge aufruft:
-    Intent intent = new Intent(context,ChallengeMapsActivity.class);
-        //Entweder neue erstellen - route geht über routenId online
-        Challenge challenge = new Challenge("First", "Schefflenz", "bisschen laufen","http://getraenke-letzguss.de/plugins/system/jat3/jat3/base-themes/default/images/favicon.ico",60,100,20);
-        //Alternativ Liste über webconnection holen und dann durchgehen und anzeigen - für die Liste passt das eher
-        List<Challenge> list = webConnection.getAllChallanges();
-
-        intent.putExtra("challenge", challenge);
-        intent.putExtra("credentials",new MyCredentials("aaron","muster"));
-
-        //  startActivity(intent);
-        startActivityForResult(intent,RESULT_ID_ROUTE_TRACKING);
-     */
 }
