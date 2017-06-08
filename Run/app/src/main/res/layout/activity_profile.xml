@@ -63,10 +63,11 @@
             app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
         <TextView
+            android:id="@+id/userInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="23\nNeckarstadt-West"
             android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextField"/>
+            app:layout_constraintTop_toBottomOf="@+id/nameTextField" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

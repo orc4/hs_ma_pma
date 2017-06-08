@@ -2,6 +2,7 @@ package de.hsmannheim.pma.run;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -9,12 +10,20 @@ import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import de.hsmannheim.pma.run.model.MyCredentials;
+import de.hsmannheim.pma.run.model.Profil;
 import de.hsmannheim.pma.run.storage.WebConnection;
 import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 import de.hsmannheim.pma.run.uiparts.TypefaceUtil;
@@ -99,6 +108,23 @@ public class LogInActivity extends FragmentActivity {
         Thread t = new Thread() {
             public void run() {
                 final boolean result = webConnection.checkLogin();
+                if(result==true){
+                    Profil profil = webConnection.getMyProfile();
+                    state.setMyProfile(profil);
+                    URL newurl = null;
+                    try {
+                        newurl = new URL(profil.getPicUrl());
+                        state.setProfielImageBitmap(BitmapFactory.decodeStream(newurl.openConnection().getInputStream()));
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Profil lala = webConnection.getMyProfile();
+                    //Log.i("lala", "run: "+lala.toString());
+
+                }
                 final Message msg = new Message();
                 final Bundle b = new Bundle();
                 int bool = (result) ? 1 : 0;
