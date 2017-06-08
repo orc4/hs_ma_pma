@@ -15,6 +15,7 @@ import android.widget.Toast;
 import de.hsmannheim.pma.run.ChallengeActivity;
 import de.hsmannheim.pma.run.InfoActivity;
 import de.hsmannheim.pma.run.LogActivity;
+import de.hsmannheim.pma.run.MainMenuActivity;
 import de.hsmannheim.pma.run.R;
 import de.hsmannheim.pma.run.ShowMapActivity;
 import de.hsmannheim.pma.run.TrackingActivity;
@@ -26,6 +27,7 @@ import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 public class MainMenuAdapter extends BaseAdapter{
     String [] result;
     Context context;
+    Activity activity;
     int [] imageId;
     MyCredentials myCredentials;
     private static LayoutInflater inflater=null;
@@ -33,6 +35,7 @@ public class MainMenuAdapter extends BaseAdapter{
         // TODO Auto-generated constructor stub
         result=prgmNameList;
         context=activity;
+        this.activity=activity;
         imageId=prgmImages;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -116,37 +119,9 @@ public class MainMenuAdapter extends BaseAdapter{
     public void onTrackingClick(){
         Intent myIntent = new Intent(context, TrackingActivity.class);
         myIntent.putExtra("creds", myCredentials);
-        context.startActivity(myIntent);
-        //Hier ein Beispiel wie das mit onActivity Result klappt
-        /*
-        Intent intent = new Intent(cnx,TrackingActivity.class);
-        //  startActivity(intent);
-        startActivityForResult(intent,RESULT_ID_ROUTE_TRACKING);
+        //context.startActivity(myIntent);
+        activity.startActivityForResult(myIntent, MainMenuActivity.RESULT_ID_ROUTE_TRACKING);
 
-        Und hier wie man die antwort handelt:
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RESULT_ID_ROUTE_TRACKING) {
-            if (resultCode == RESULT_OK) {
-                Route route2 = data.getParcelableExtra("route");
-
-                RouteAnalyse routeAnal = new RouteAnalyse(route2);
-                routeAnal.analyseDistance();
-                routeAnal.analyseTime();
-                routeAnal.analyseHigh();
-                double distance = routeAnal.getDistance();
-                long time = routeAnal.getTimeInSeconds();
-                double up = routeAnal.getMeterUp();
-                double down = routeAnal.getMeterDown();
-
-                textInfo.setText("Distance "+ String.format( "%.4f", distance )+" Meter"
-                        + time + "Secs " +
-                        "up: "+up+"m " +
-                        "down "+down+"m ");
-
-                }
-            }
-        }
-         */
 
     }
 }
