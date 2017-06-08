@@ -19,14 +19,14 @@ public class RouteAnalyse implements Parcelable {
 
     private Route route;
 
-    private Double distance;
-    private Double paceMinPerKm;
-    private Double speedKmh;
-    private Double meterUp;
-    private Double meterDown;
+    private double distance;
+    private double paceMinPerKm;
+    private double speedKmh;
+    private double meterUp;
+    private double meterDown;
     private long time;
-    private Integer routeId;
-    private Integer challengeId;
+    private int routeId;
+    private int challengeId;
     private String username;
     private Date startDate;
 

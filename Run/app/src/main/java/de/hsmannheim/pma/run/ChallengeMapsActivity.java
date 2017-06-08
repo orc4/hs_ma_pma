@@ -144,6 +144,14 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
                 startTracking();
                 startTimeUpdate();
                 startButton.setBackgroundColor(Color.RED);
+                //FIXME: Raus - ist nur fürs Testen da!
+                startButton.setText("stop");
+                startButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        stopTracking();
+                    }
+                });
             }
         });
         /*stopButton.setOnClickListener(new View.OnClickListener() {

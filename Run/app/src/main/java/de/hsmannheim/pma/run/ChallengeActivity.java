@@ -101,6 +101,11 @@ public class ChallengeActivity extends Activity {
                     }
                 };
                 t.start();
+                Intent intent = new Intent(context, ChallengeDoneActivity.class);
+                intent.putExtra("challenge", challenge);
+                intent.putExtra("routeAnalyse", ra);
+                intent.putExtra("creds",myCredentials);
+                context.startActivity(intent);
 
                 Log.i(this.getClass().toString(), "onActivityResult: hier!");
             }
