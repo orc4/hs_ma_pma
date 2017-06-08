@@ -88,7 +88,6 @@ public class ChallengeActivity extends Activity {
                 final Challenge challenge = data.getParcelableExtra("challenge");
                 final RouteAnalyse ra = new RouteAnalyse(route);
                 ra.setChallengeId(challenge.getId());
-                ra.analyseAll();
 
                 //Alles hochladen
                 Thread t = new Thread() {

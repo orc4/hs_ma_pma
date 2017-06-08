@@ -76,7 +76,6 @@ public class MainMenuActivity extends Activity {
                 //Handle nachdem das Tracking beendet wurde
                 final Route route = data.getParcelableExtra("route");
                 final RouteAnalyse ra = new RouteAnalyse(route);
-                ra.analyseAll();
                 Log.i(this.getClass().toString(), "onActivityResult: Meder Down "+ra.getMeterDown());
 
                 //Alles hochladen

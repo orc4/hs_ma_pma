@@ -2,6 +2,7 @@ package de.hsmannheim.pma.run.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -17,27 +18,7 @@ import de.hsmannheim.pma.run.utils.DistanceCalculator;
 
 public class RouteAnalyse implements Parcelable {
 
-    private Route route;
-
-    private double distance;
-    private double paceMinPerKm;
-    private double speedKmh;
-    private double meterUp;
-    private double meterDown;
-    private long time;
-    private int routeId;
-    private int challengeId;
-    private String username;
-    private Date startDate;
-
-
-
-    public RouteAnalyse(Route route){
-        this.route = route;
-        routeId=-1;
-        challengeId=-1;
-        startDate = route.getStartDate();
-    }
+    //private Route route;
 
     public static final Creator<RouteAnalyse> CREATOR =
             new Creator<RouteAnalyse>() {
@@ -49,23 +30,51 @@ public class RouteAnalyse implements Parcelable {
                     return new RouteAnalyse[size];
                 }
             };
+    private Double distance;
+    private Double paceMinPerKm;
+    private Double speedKmh;
+    private Double meterUp;
+    private Double meterDown;
+    private long time;
+    private int routeId=0;
+    private int challengeId=0;
+    private String username;
+    private Date startDate;
+
+    public String toString(){
+        String str= "distance "+distance+", pace "+paceMinPerKm+", speed "+speedKmh+", meterUp " +
+                ""+meterUp+", meterDown "+meterDown;
+        return str;
+    }
+
+    public RouteAnalyse(Route route) {
+
+        routeId = -1;
+        challengeId = -1;
+        startDate = route.getStartDate();
+
+        analyseDistance(route);
+        analyseHigh(route);
+        analyseTime(route);
+        analyseSpeed();
+    }
 
     private RouteAnalyse(Parcel in) {
-        distance=in.readDouble();
-        paceMinPerKm=in.readDouble();
-        speedKmh=in.readDouble();
-        meterUp=in.readDouble();
-        meterDown=in.readDouble();
-        time=in.readLong();
-        routeId=in.readInt();
-        challengeId=in.readInt();
-        username=in.readString();
+        distance = in.readDouble();
+        paceMinPerKm = in.readDouble();
+        speedKmh = in.readDouble();
+        meterUp = in.readDouble();
+        meterDown = in.readDouble();
+        time = in.readLong();
+        routeId = in.readInt();
+        challengeId = in.readInt();
+        username = in.readString();
         startDate = (Date) in.readSerializable();
 
     }
 
     public void writeToParcel(Parcel out, int flags) {
-       out.writeDouble(distance);
+        out.writeDouble(distance);
         out.writeDouble(paceMinPerKm);
         out.writeDouble(speedKmh);
         out.writeDouble(meterUp);
@@ -76,6 +85,7 @@ public class RouteAnalyse implements Parcelable {
         out.writeString(username);
         out.writeSerializable(startDate);
     }
+
     public int describeContents() {
         return this.hashCode();
     }
@@ -86,6 +96,11 @@ public class RouteAnalyse implements Parcelable {
 
     public Date getStartDate() {
         return startDate;
+    }
+
+    public void analyseSpeed() {
+        speedKmh = (distance / 1000) / (time / 1000) * 3.6;
+        paceMinPerKm = (time / 1000 / 60) / ((distance / 1000)+0.00001);
     }
 
     public Double getSpeedKmh() {
@@ -108,74 +123,66 @@ public class RouteAnalyse implements Parcelable {
         return routeId;
     }
 
-    public Integer getChallengeId() {
-        return challengeId;
-    }
-
     public void setRouteId(int routeId) {
         this.routeId = routeId;
+    }
+
+    public Integer getChallengeId() {
+        return challengeId;
     }
 
     public void setChallengeId(int challangeId) {
         this.challengeId = challangeId;
     }
 
-    public void analyseAll(){
-        analyseDistance();
-        analyseHigh();
-        analyseTime();
-    }
-    public void analyseDistance(){
-        distance=0d;
-        boolean first=true;
-        LatLng lastPoint=null;
-        for (LatLng point: route.getWayPoints()) {
-            if(first){
-                first=false;
-            }else{
-                distance=distance+ DistanceCalculator.distanceMeter(lastPoint,point);
+    public void analyseDistance(Route route) {
+        distance = 0d;
+        boolean first = true;
+        LatLng lastPoint = null;
+        for (LatLng point : route.getWayPoints()) {
+            if (first) {
+                first = false;
+            } else {
+                distance = distance + DistanceCalculator.distanceMeter(lastPoint, point);
             }
-            lastPoint=point;
+            lastPoint = point;
         }
     }
-    public void analysePaceMinPerKm(){
 
-    }
-    public void analysespeedKmh(){
-
-    }
-    public void analyseHigh(){
-        meterDown=0d;
-        meterUp=0d;
-        boolean first=true;
-        double lastHigh=0d;
-        for (Double high: route.getWayPointsAltitude()) {
-            if(first){
-                first=false;
-            }else{
-                double diff = high-lastHigh;
-                if(diff>0){
+    public void analyseHigh(Route route) {
+        meterDown = 0d;
+        meterUp = 0d;
+        boolean first = true;
+        double lastHigh = 0d;
+        for (Double high : route.getWayPointsAltitude()) {
+            if (first) {
+                first = false;
+            } else {
+                double diff = high - lastHigh;
+                if (diff > 0) {
                     meterUp += diff;
-                }else{
+                } else {
                     meterDown += diff;
                 }
 
             }
-            lastHigh=high;
+            lastHigh = high;
         }
 
     }
-    public void analyseTime(){
+
+    public void analyseTime(Route route) {
         List<Date> points = route.getWayPointsDates();
-        Date end = points.get(points.size()-1);
-        time = end.getTime()-route.getStartDate().getTime();
+        Date end = points.get(points.size() - 1);
+        time = end.getTime() - route.getStartDate().getTime();
     }
 
     public Double getDistance() {
         return distance;
     }
-    public long getTimeInSeconds(){
-        return time/1000;
+
+    public long getTimeInSeconds() {
+        return time / 1000;
     }
 
     public Double getMeterDown() {
