@@ -1,16 +1,12 @@
 package de.hsmannheim.pma.run;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,7 +32,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
     protected GoogleMap myMap;
     protected Polyline line;
     protected WebConnection webConnection;
-    protected boolean map_Ready=false;
+    protected boolean map_Ready = false;
 
     protected TextView usernameText;
     protected TextView startDateText;
@@ -75,18 +71,18 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
         meterDownText = (TextView) findViewById(R.id.meterDownText);
         //TODO: Schauen ob route null ist! - Wenn ja aus RouteAnalyse die routeId holen und laden
 
-        if(route==null&&routeAnalyse.getRouteId()!=null&&routeAnalyse.getRouteId()>0){
-             Thread t = new Thread() {
-            public void run() {
-                final Route route = webConnection.getRoute(routeAnalyse.getRouteId());
-                final Message msg = new Message();
-                final Bundle b = new Bundle();
-                b.putParcelable("route",route);
-                msg.setData(b);
-                handler.sendMessage(msg);
-            }
-        };
-        t.start();
+        if (route == null && routeAnalyse.getRouteId() != null && routeAnalyse.getRouteId() > 0) {
+            Thread t = new Thread() {
+                public void run() {
+                    final Route route = webConnection.getRoute(routeAnalyse.getRouteId());
+                    final Message msg = new Message();
+                    final Bundle b = new Bundle();
+                    b.putParcelable("route", route);
+                    msg.setData(b);
+                    handler.sendMessage(msg);
+                }
+            };
+            t.start();
         }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -104,20 +100,19 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
         p.color(Color.RED);
         line = map.addPolyline(p);
         Log.i(this.getClass().toString(), "Map ready");
-        map_Ready=true;
+        map_Ready = true;
         if (route != null) {
             updateMap();
         }
     }
 
-    protected void updateMap(){
+    protected void updateMap() {
         List<LatLng> points = route.getWayPoints();
         line.setPoints(points);
         LatLng lastPoint = points.get(points.size() - 1);
         //TODO: Mov zu einem Punkt dazwischen - und zoom einigermaßen anpassen!!!
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastPoint, 15));
     }
-
 
 
     protected void refreshValues() {

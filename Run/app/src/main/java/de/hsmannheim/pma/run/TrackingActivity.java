@@ -35,24 +35,19 @@ import de.hsmannheim.pma.run.model.Route;
 
 
 public class TrackingActivity extends FragmentActivity implements OnMapReadyCallback {
-    MyCredentials myCredentials;
-
-    //TODO: Location von GPS + Network nehmen und die bessere nehmen
-
     final int MY_PERMISSIONS_REQUEST = 1;
 
+    //TODO: Location von GPS + Network nehmen und die bessere nehmen
     protected Button startButton;
-
     protected TextView infoText;
     protected Route route;
-
-    LocationManager locationManager;
-    LocationListener locationListener;
-
-    private int count = 0;
-    boolean tracking = false;
     protected GoogleMap myMap;
     protected Polyline line;
+    MyCredentials myCredentials;
+    LocationManager locationManager;
+    LocationListener locationListener;
+    boolean tracking = false;
+    private int count = 0;
 
     private boolean check_permissions() {
         if (ContextCompat.checkSelfPermission(this,
@@ -128,11 +123,12 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
 
     }
 
-    protected void startTimeUpdate(){
+    protected void startTimeUpdate() {
         //TODO: kann raus in eine separate Klasse!
         Thread refreshThread = new Thread(new Runnable() {
             TextView textViewTime = (TextView) findViewById(R.id.time);
-            int time=0;
+            int time = 0;
+
             public void run() {
                 while (true) {
                     time = time + 1;
@@ -142,9 +138,9 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
                     }
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            int sec = (int) (time%60);
-                            int min = (int) (time/60);
-                            textViewTime.setText(min+":"+String.format("%02d", sec));
+                            int sec = (int) (time % 60);
+                            int min = (int) (time / 60);
+                            textViewTime.setText(min + ":" + String.format("%02d", sec));
                         }
                     });
                 }
@@ -190,7 +186,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         p.color(Color.RED);
         line = map.addPolyline(p);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-           return;
+            return;
         }
         map.setMyLocationEnabled(true);
         Log.i(this.getClass().toString(), "Map ready");
@@ -199,10 +195,10 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
 
     }
 
-    protected void updateMap(){
+    protected void updateMap() {
         List<LatLng> points = route.getWayPoints();
         line.setPoints(points);
-        LatLng lastPoint = points.get(points.size()-1);
+        LatLng lastPoint = points.get(points.size() - 1);
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastPoint, 16));
 
     }
@@ -220,7 +216,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
 
     }
 
-    private void stopTracking(){
+    private void stopTracking() {
         tracking = false;
         startButton.setBackgroundColor(Color.GREEN);
         Intent resultData = new Intent();
@@ -239,7 +235,8 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         //locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         //locationManager.removeUpdates(locationListener);
     }
-    private void startTracking(){
+
+    private void startTracking() {
         tracking = true;
         route = new Route(new Date());
 
@@ -267,7 +264,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10, locationListener);
     }
 
-    public void onProfileButtonClick(View view){
+    public void onProfileButtonClick(View view) {
         Intent myIntent = new Intent(this, ProfileActivity.class);
         myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);

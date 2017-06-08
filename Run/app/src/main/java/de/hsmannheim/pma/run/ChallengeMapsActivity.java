@@ -16,12 +16,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +57,7 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     protected LocationManager locationManager;
     protected LocationListener locationListener;
     protected boolean tracking = false;
-    protected boolean startReached=false;
+    protected boolean startReached = false;
     private int count = 0;
     private Handler handler = new Handler() {
         @Override
@@ -294,7 +291,7 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
             LatLng currPos = new LatLng(location.getLatitude(), location.getLongitude());
             double distance = DistanceCalculator.distanceMeter(currPos, routeToRun.getWayPoints().get(0));
             if (distance < 100 && !startReached) {
-                startReached=true;
+                startReached = true;
                 startButton.setEnabled(false);
                 startButton.setText("Start");
                 startButton.setBackgroundColor(Color.LTGRAY);
@@ -318,9 +315,10 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
                     }
                 });
 
-                new CountDownTimer(2000,1000) {
+                new CountDownTimer(2000, 1000) {
                     public void onTick(long millisUntilFinished) {
                     }
+
                     public void onFinish() {
                         startButton.setEnabled(true);
                         startButton.setBackgroundColor(Color.GREEN);
