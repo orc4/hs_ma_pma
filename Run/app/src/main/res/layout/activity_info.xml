@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/infoblock"
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Im Rahmen des Projektseminars Mobile Anwendungen an der Hochschule Mannheim haben wir eine Anwendung für alle entwickelt, die gerne laufen, wandern, die Umgebung erkunden - und Mannheim lieben.\nUn jetz laaf los!"
         android:textSize="16dp"
@@ -70,7 +70,7 @@
         android:layout_marginTop="30dp"/>
 
     <TextView
-        android:layout_width="260dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RUN²\n06/2017\nAaron Letzguss | Lena Serdarusic\nProjektseminar Mobile Anwendungen\nHS Mannheim"
         android:textSize="12dp"

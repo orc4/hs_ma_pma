@@ -60,7 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="passwort"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:inputType="textPassword|textNoSuggestions"
+            android:fontFamily="sans-serif"/>
 
         <Button
             android:id="@+id/logInButton"
@@ -68,12 +70,6 @@
             android:layout_width="match_parent"
             android:text="anmelden"
             android:onClick="onLogInClick"/>
-
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="registrieren"/>
     </LinearLayout>
 </FrameLayout>
 
