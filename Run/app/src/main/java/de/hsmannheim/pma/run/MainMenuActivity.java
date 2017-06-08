@@ -75,19 +75,25 @@ public class MainMenuActivity extends Activity {
             }else{
                 //Handle nachdem das Tracking beendet wurde
                 final Route route = data.getParcelableExtra("route");
-                final RouteAnalyse ra = new RouteAnalyse(route);
-                Log.i(this.getClass().toString(), "onActivityResult: Meder Down "+ra.getMeterDown());
+                final RouteAnalyse routeAnalyse = new RouteAnalyse(route);
+                Log.i(this.getClass().toString(), "onActivityResult: Meder Down "+routeAnalyse.getMeterDown());
 
                 //Alles hochladen
                 Thread t = new Thread() {
                     public void run() {
                         int routeId = webConnection.addRoute(route);
-                        ra.setRouteId(routeId);
-                        webConnection.addRouteAnalyse(ra);
+                        routeAnalyse.setRouteId(routeId);
+                        webConnection.addRouteAnalyse(routeAnalyse);
                         Log.i(this.getClass().toString(), "onActivityResult: Tracking upload Fertig!");
                     }
                 };
                 t.start();
+
+                Intent myIntent = new Intent(context, RouteAnalyseActivity.class);
+                myIntent.putExtra("route",route);
+                myIntent.putExtra("routeAnalyse",routeAnalyse);
+                myIntent.putExtra("creds",myCredentials);
+                context.startActivity(myIntent);
 
                 Log.i(this.getClass().toString(), "onActivityResult: hier!");
             }
