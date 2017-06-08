@@ -31,6 +31,8 @@ public class LogInActivity extends FragmentActivity {
     LogInFragment logInFragment;
     EditText password, username;
     Context context = this;
+    MyCredentials myCredentials;
+
 
     private Handler handler = new Handler() {
         @Override
@@ -40,7 +42,6 @@ public class LogInActivity extends FragmentActivity {
 
             if(value==1){
                 Intent myIntent = new Intent(context, MainMenuActivity.class);
-                MyCredentials myCredentials = new MyCredentials("aaron","muster");
                 myIntent.putExtra("creds", myCredentials);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(myIntent);
@@ -89,7 +90,11 @@ public class LogInActivity extends FragmentActivity {
         username = (EditText) findViewById(R.id.nameTextField);
         String myPassword = password.getText().toString().toLowerCase();
         String myUsername = username.getText().toString();
-        final WebConnection webConnection = new WebConnectionImpl(new MyCredentials(myUsername, myPassword));
+
+        //FIXME: only for debug!
+        myPassword="muster"; myUsername="aaron";
+        myCredentials = new MyCredentials(myUsername, myPassword);
+        final WebConnection webConnection = new WebConnectionImpl(myCredentials);
         Thread t = new Thread() {
             public void run() {
                 final boolean result = webConnection.checkLogin();
