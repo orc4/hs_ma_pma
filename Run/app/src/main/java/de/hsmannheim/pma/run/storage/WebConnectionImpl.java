@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hsmannheim.pma.run.model.*;
@@ -97,22 +98,22 @@ public class WebConnectionImpl implements WebConnection {
     }
 
     @Override
-    public List<Route> getMyRoutes() {
+    public ArrayList<Route> getMyRoutes() {
         String url = SERVER_CONNECTION + "/get_routes.php";
         String json = this.getDownloadHandler().makeServiceCall(url);
-        Type collectionType = new TypeToken<List<Route>>() {
+        Type collectionType = new TypeToken<ArrayList<Route>>() {
         }.getType();
-        List<Route> routes = gson.fromJson(json, collectionType);
+        ArrayList<Route> routes = gson.fromJson(json, collectionType);
         return routes;
     }
 
     @Override
-    public List<Challenge> getAllChallanges() {
+    public ArrayList<Challenge> getAllChallanges() {
         String url = SERVER_CONNECTION + "/get_challenges.php";
         String json = this.getDownloadHandler().makeServiceCall(url);
-        Type collectionType = new TypeToken<List<Challenge>>() {
+        Type collectionType = new TypeToken<ArrayList<Challenge>>() {
         }.getType();
-        List<Challenge> challenges = gson.fromJson(json, collectionType);
+        ArrayList<Challenge> challenges = gson.fromJson(json, collectionType);
 
         return challenges;
     }
