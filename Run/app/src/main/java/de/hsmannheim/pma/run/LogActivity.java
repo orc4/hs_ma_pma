@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -13,7 +15,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hsmannheim.pma.run.model.Challenge;
 import de.hsmannheim.pma.run.model.MyCredentials;
+import de.hsmannheim.pma.run.model.Route;
+import de.hsmannheim.pma.run.model.RouteAnalyse;
 import de.hsmannheim.pma.run.storage.WebConnection;
 import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 import de.hsmannheim.pma.run.uiparts.LogAdapter;
@@ -21,7 +26,23 @@ import de.hsmannheim.pma.run.uiparts.LogAdapter;
 public class LogActivity extends Activity {
     ListView lv;
     Context context;
+    Activity logActivity;
     protected MyCredentials myCredentials;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Bundle b = msg.getData();
+            final ArrayList<RouteAnalyse> allRouteAnalyses=b.getParcelableArrayList("routeAnalyses");
+            handleRoutesReceive(allRouteAnalyses);
+        }
+    };
+
+    private void handleRoutesReceive(ArrayList<RouteAnalyse> allRouteAnalyses) {
+        lv = (ListView) findViewById(R.id.logList);
+        Log.i(this.getClass().toString(), "handleRoutesReceive: "+allRouteAnalyses.size());
+        lv.setAdapter(new LogAdapter(this, allRouteAnalyses, challengeNameOrTrackingArray, dateInformation, prgmImages, myCredentials));
+    }
 
     public static int[] prgmImages = {R.drawable.tracking, R.drawable.buschkind, R.drawable.tracking};
     public static String[] challengeNameOrTrackingArray = {"Tracking", "Quadratekid", "Tracking"};
@@ -36,25 +57,24 @@ public class LogActivity extends Activity {
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
         Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_LONG).show();
-        WebConnection webConnection = new WebConnectionImpl(myCredentials);
+        final WebConnection webConnection = new WebConnectionImpl(myCredentials);
 
-        /*List<Challenge> allRuns = webConnection.getAllRuns();
-        List<String> runNames = new ArrayList<String>();
-        List<String> runDescriptions = new ArrayList<String>();
 
-        for(int i = 0; i<allRuns.size(); i++)
-        {
-            runNames.add(allRuns.get(i).getName());
-            runDescriptions.add(allRuns.get(i).getDescription());
-        }
-        challengeNameOrTrackingArray = new String[allRuns.size()];
-        dateInformation = new String[allRuns.size()];
-        runNames.toArray(challengeNameOrTrackingArray);
-        runDescriptions.toArray(dateInformation);*/
-
+        Thread t = new Thread() {
+            public void run() {
+                final ArrayList<RouteAnalyse> myRouteAnalyses = webConnection.getMyRouteAnalyses();
+                final Message msg = new Message();
+                final Bundle b = new Bundle();
+                b.putParcelableArrayList("routeAnalyses",myRouteAnalyses);
+                msg.setData(b);
+                handler.sendMessage(msg);
+            }
+        };
+        t.start();
         context = this;
-        lv = (ListView) findViewById(R.id.logList);
-        lv.setAdapter(new LogAdapter(this, challengeNameOrTrackingArray, dateInformation, prgmImages, myCredentials));
+        logActivity=this;
+
+
     }
 
     public void onProfileButtonClick(View view){

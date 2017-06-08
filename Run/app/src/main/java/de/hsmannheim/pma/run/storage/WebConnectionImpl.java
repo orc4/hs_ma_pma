@@ -98,6 +98,18 @@ public class WebConnectionImpl implements WebConnection {
     }
 
     @Override
+    public int addRouteAnalyse(RouteAnalyse routeAnalyse) {
+        //Setzen des Users
+        routeAnalyse.setUsername(myCredentials.getUsername());
+        String json = gson.toJson(routeAnalyse);
+        String url = SERVER_CONNECTION + "/add_route_analyse.php";
+        String result = DownloadHandler.makeRequest(url, json);
+        int createId = Integer.parseInt(result);
+        Log.i(this.getClass().toString(), "addRouteAnalyse: Return value: " + createId);
+        return createId;
+    }
+
+    @Override
     public ArrayList<Route> getMyRoutes() {
         String url = SERVER_CONNECTION + "/get_routes.php";
         String json = this.getDownloadHandler().makeServiceCall(url);
@@ -105,6 +117,16 @@ public class WebConnectionImpl implements WebConnection {
         }.getType();
         ArrayList<Route> routes = gson.fromJson(json, collectionType);
         return routes;
+    }
+
+    @Override
+    public ArrayList<RouteAnalyse> getMyRouteAnalyses() {
+        String url = SERVER_CONNECTION + "/get_route_analyses.php?username=" + myCredentials.getUsername();
+        String json = this.getDownloadHandler().makeServiceCall(url);
+        Type collectionType = new TypeToken<ArrayList<RouteAnalyse>>() {
+        }.getType();
+        ArrayList<RouteAnalyse> routeAnalyses = gson.fromJson(json, collectionType);
+        return routeAnalyses;
     }
 
     @Override

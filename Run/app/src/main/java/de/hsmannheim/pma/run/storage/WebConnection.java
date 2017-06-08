@@ -18,7 +18,9 @@ public interface WebConnection {
     public Profil getMyProfile();
     public int addChallange(Challenge challenge);
     public int addRoute(Route route);
+    public int addRouteAnalyse(RouteAnalyse routeAnalyse);
     public ArrayList<Route> getMyRoutes();
+    public ArrayList<RouteAnalyse> getMyRouteAnalyses();
     public ArrayList<Challenge> getAllChallanges();
     public void setChallengeChecked(Challenge challenge);
     public boolean checkLogin();
