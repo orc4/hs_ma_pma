@@ -28,8 +28,6 @@ public class ChallengeActivity extends Activity {
     protected MyCredentials myCredentials;
 
     public static int[] prgmImages = {R.drawable.buschkind, R.drawable.quadratekid};
-    public static String[] challengeNameArray;
-    public static String[] challengeDescriptionArray;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -64,9 +62,6 @@ public class ChallengeActivity extends Activity {
             }
         };
         t.start();
-
-
-        //List<Challenge> allAvailableChallenges = webConnection.getAllChallanges();
 
         context = this;
         challengeActivity=this;
