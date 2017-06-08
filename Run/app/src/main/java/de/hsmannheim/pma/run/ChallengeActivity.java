@@ -94,6 +94,7 @@ public class ChallengeActivity extends Activity {
                     public void run() {
                         int routeId = webConnection.addRoute(route);
                         ra.setRouteId(routeId);
+                        Log.i(this.getClass().toString(), "onActivityResult: routeAnalyse "+ra.toString());
                         webConnection.addRouteAnalyse(ra);
                         webConnection.setChallengeChecked(challenge);
                         Log.i(this.getClass().toString(), "onActivityResult: Tracking + Challenge upload Fertig!");

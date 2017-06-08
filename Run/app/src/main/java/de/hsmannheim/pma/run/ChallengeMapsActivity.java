@@ -9,14 +9,19 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,13 +34,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import de.hsmannheim.pma.run.model.*;
-import de.hsmannheim.pma.run.storage.*;
-import de.hsmannheim.pma.run.utils.*;
+import de.hsmannheim.pma.run.model.Challenge;
+import de.hsmannheim.pma.run.model.MyCredentials;
+import de.hsmannheim.pma.run.model.Route;
+import de.hsmannheim.pma.run.storage.WebConnectionFactory;
+import de.hsmannheim.pma.run.utils.DistanceCalculator;
 
 public class ChallengeMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -47,17 +53,15 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     protected Route routeTracked;
     protected Route routeToRun;
     protected Challenge challenge;
-
-
-    LocationManager locationManager;
-    LocationListener locationListener;
-
-    private int count = 0;
-    boolean tracking = false;
+    protected Location lastLocation;
     protected GoogleMap myMap;
     protected Polyline lineTracked;
     protected Polyline lineToRun;
-
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+    protected boolean tracking = false;
+    protected boolean startReached=false;
+    private int count = 0;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -110,7 +114,7 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
 
                 final Message msg = new Message();
                 final Bundle b = new Bundle();
-                b.putParcelable("routeToRun",routeToRun);
+                b.putParcelable("routeToRun", routeToRun);
                 msg.setData(b);
                 handler.sendMessage(msg);
             }
@@ -138,52 +142,43 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     }
 
     private void initPhase2() {
+        startLocationUpdates();
+        startButton.setText("Navigate to begin of Route");
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startTracking();
-                startTimeUpdate();
-                startButton.setBackgroundColor(Color.RED);
-                //FIXME: Raus - ist nur fürs Testen da!
-                startButton.setText("stop");
-                startButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        stopTracking();
-                    }
-                });
+                LatLng startPoint = routeToRun.getWayPoints().get(0);
+                Uri gmmIntentUri = Uri.parse("google.navigation:q=" + startPoint.latitude + "," + startPoint.longitude + "&mode=w");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
             }
         });
-        /*stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stopTracking();
-            }
-        });*/
     }
 
-    protected void startTimeUpdate(){
+    protected void startTimeUpdate() {
         Thread refreshThread = new Thread(new Runnable() {
             TextView textViewTime = (TextView) findViewById(R.id.time);
-            int time=0;
-          public void run() {
-              while (true) {
-                   time = time + 1;
-                  try {
-                      Thread.sleep(1000);
-                  } catch (InterruptedException ex) {
-                  }
-                  runOnUiThread(new Runnable() {
-                      public void run() {
-                          int sec = (int) (time%60);
-                          int min = (int) (time/60);
-                          textViewTime.setText(min+":"+String.format("%02d", sec));
-                      }
-                  });
-              }
-          }
-      });
-      refreshThread.start();
+            int time = 0;
+
+            public void run() {
+                while (true) {
+                    time = time + 1;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                    }
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            int sec = (int) (time % 60);
+                            int min = (int) (time / 60);
+                            textViewTime.setText(min + ":" + String.format("%02d", sec));
+                        }
+                    });
+                }
+            }
+        });
+        refreshThread.start();
     }
 
 
@@ -220,24 +215,15 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
         p2.color(Color.BLUE);
         lineToRun = map.addPolyline(p2);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         map.setMyLocationEnabled(true);
 
         Log.i(this.getClass().toString(), "Map ready");
         this.initPhase2();
-
-
     }
 
-    protected void checkRouteToRun(Location location){
+    protected void checkRouteToRun(Location location) {
         LatLng currentPos = new LatLng(location.getLatitude(), location.getLongitude());
         List<LatLng> list = routeToRun.getWayPoints();
         List<Date> listTimes = routeToRun.getWayPointsDates();
@@ -247,80 +233,125 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
 
 
         int index = 0;
-        int maxDiff=50;
-        boolean lastDeleted=true;
-        boolean seconLastDeleted=true;
-        while((lastDeleted | seconLastDeleted)&index<list.size()){
-           // System.out.println("");
-           // System.out.println("index "+ index + " last "+ lastDeleted + " sec " + seconLastDeleted);
-           // System.out.println(list.toString());
-            double distance= DistanceCalculator.distanceMeter(currentPos,list.get(index));
-            Log.i(this.getClass().toString(), "checkRouteToRun: Distance: "+distance+"m");
-            if(distance<maxDiff){
-                long timeDiff = (((now.getTime()-startDateNew.getTime())-(listTimes.get(index).getTime()-startDateOld.getTime()))/1000);
-                if(timeDiff<0){
+        int maxDiff = 50;
+        boolean lastDeleted = true;
+        boolean seconLastDeleted = true;
+        while ((lastDeleted | seconLastDeleted) & index < list.size()) {
+            // System.out.println("");
+            // System.out.println("index "+ index + " last "+ lastDeleted + " sec " + seconLastDeleted);
+            // System.out.println(list.toString());
+            double distance = DistanceCalculator.distanceMeter(currentPos, list.get(index));
+            Log.i(this.getClass().toString(), "checkRouteToRun: Distance: " + distance + "m");
+            if (distance < maxDiff) {
+                long timeDiff = (((now.getTime() - startDateNew.getTime()) - (listTimes.get(index).getTime() - startDateOld.getTime())) / 1000);
+                if (timeDiff < 0) {
                     infoText.setTextColor(Color.GREEN);
-                    infoText.setText("aktuell "+(-timeDiff)+" sec schneller als die Bestzeit");
-                }else{
+                    infoText.setText("aktuell " + (-timeDiff) + " sec schneller als die Bestzeit");
+                } else {
                     infoText.setTextColor(Color.RED);
-                    infoText.setText("aktuell "+timeDiff+" sec langsamer als die Bestzeit");
+                    infoText.setText("aktuell " + timeDiff + " sec langsamer als die Bestzeit");
                 }
 
                 list.remove(index);
                 listTimes.remove(index);
-                if(!lastDeleted&&index>0){
-                    list.remove(index-1);
-                    listTimes.remove(index-1);
+                if (!lastDeleted && index > 0) {
+                    list.remove(index - 1);
+                    listTimes.remove(index - 1);
                     index--;
                 }
                 seconLastDeleted = lastDeleted;
-                lastDeleted=true;
-            }else{
+                lastDeleted = true;
+            } else {
                 seconLastDeleted = lastDeleted;
-                lastDeleted=false;
+                lastDeleted = false;
                 index++;
             }
         }
-        if(list.size()==0){
+        if (list.size() == 0) {
             stopTracking();
         }
 
     }
 
-    protected void updateMap(){
+    protected void updateMap() {
         List<LatLng> pointsToRun = routeToRun.getWayPoints();
         lineToRun.setPoints(pointsToRun);
 
-        List<LatLng> pointsTracked = routeTracked.getWayPoints();
-        lineTracked.setPoints(pointsTracked);
-        Log.i(this.getClass().toString(), "updateMap: " + pointsToRun.size() + " pointsTo Run    "+pointsTracked.size()+" tracked");
-
-        LatLng lastPoint = pointsTracked.get(pointsTracked.size()-1);
-        myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastPoint, 16));
+        if (routeTracked != null) {
+            List<LatLng> pointsTracked = routeTracked.getWayPoints();
+            lineTracked.setPoints(pointsTracked);
+            LatLng lastPoint = pointsTracked.get(pointsTracked.size() - 1);
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastPoint, 16));
+            Log.i(this.getClass().toString(), "updateMap: " + pointsToRun.size() + " pointsTo Run    " + pointsTracked.size() + " tracked");
+        } else {
+            myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pointsToRun.get(0), 16));
+        }
 
     }
 
     private void handleNewLocation(Location location) {
+        if (!tracking) {
+            LatLng currPos = new LatLng(location.getLatitude(), location.getLongitude());
+            double distance = DistanceCalculator.distanceMeter(currPos, routeToRun.getWayPoints().get(0));
+            if (distance < 100 && !startReached) {
+                startReached=true;
+                startButton.setEnabled(false);
+                startButton.setText("Start");
+                startButton.setBackgroundColor(Color.LTGRAY);
+                startButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startTracking();
+                        startTimeUpdate();
+                        if (lastLocation != null) {
+                            handleNewLocation(lastLocation);
+                        }
+                        startButton.setBackgroundColor(Color.RED);
+                        //FIXME: Raus - ist nur fürs Testen da!
+                        startButton.setText("stop");
+                        startButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                stopTracking();
+                            }
+                        });
+                    }
+                });
+
+                new CountDownTimer(2000,1000) {
+                    public void onTick(long millisUntilFinished) {
+                    }
+                    public void onFinish() {
+                        startButton.setEnabled(true);
+                        startButton.setBackgroundColor(Color.GREEN);
+                    }
+                }.start();
+            }
+        }
+
+
+        lastLocation = location;
         //Info Ausgabe auf dem Display
         Log.i(this.getClass().toString(), "handleNewLocation: " + location.getLatitude() + "/" + location.getLongitude() + "/" + location.getAltitude() + "üNN");
         count++;
-        //infoText.setText(count + "New Location " + location.getLatitude() + "/" + location.getLongitude() + "/" + location.getAltitude() + "üNN");
 
         //Add to Route Object
         LatLng actualPosition = new LatLng(location.getLatitude(), location.getLongitude());
-        routeTracked.addWaypoint(new Date(), actualPosition, location.getAltitude());
-        checkRouteToRun(location);
+        if (tracking) {
+            routeTracked.addWaypoint(new Date(), actualPosition, location.getAltitude());
+            checkRouteToRun(location);
+        }
         updateMap();
     }
 
-    private void stopTracking(){
+    private void stopTracking() {
         tracking = false;
         startButton.setBackgroundColor(Color.GREEN);
         Intent resultData = new Intent();
 
         stopLocationUpdates();
         resultData.putExtra("route", routeTracked);
-        resultData.putExtra("challenge",challenge);
+        resultData.putExtra("challenge", challenge);
         setResult(Activity.RESULT_OK, resultData);
         finish();
     }
@@ -330,10 +361,8 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
         //locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         //locationManager.removeUpdates(locationListener);
     }
-    private void startTracking(){
-        tracking = true;
-        routeTracked = new Route(new Date());
 
+    private void startLocationUpdates() {
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -358,7 +387,14 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10, locationListener);
     }
 
-    public void challengeDone(View view){
+    private void startTracking() {
+        tracking = true;
+        routeTracked = new Route(new Date());
+
+
+    }
+
+    public void challengeDone(View view) {
         Intent myIntent = new Intent(this, ChallengeDoneActivity.class);
         this.startActivity(myIntent);
     }
