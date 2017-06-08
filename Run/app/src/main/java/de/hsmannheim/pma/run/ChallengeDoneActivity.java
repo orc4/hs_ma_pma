@@ -27,11 +27,13 @@ protected MyCredentials myCredentials;
 
         TextView challengeHeadLine = (TextView) findViewById(R.id.challengeHeadline);
         TextView yourTime = (TextView) findViewById(R.id.yourTime);
+        TextView finishText = (TextView) findViewById(R.id.finishText);
 
         challengeHeadLine.setText(challenge.getName());
         int sec = (int) (ra.getTimeInSeconds()%60);
         int min = (int) (ra.getTimeInSeconds()/60);
         yourTime.setText(String.format("%02d", min)+":"+String.format("%02d", sec));
+        finishText.setText(challenge.getFinishText());
     }
 
     public void onMainMenuReturn(View view){
