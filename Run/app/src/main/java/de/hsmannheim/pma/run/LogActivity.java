@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -85,13 +88,37 @@ public class LogActivity extends Activity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
     {
         super.onCreateContextMenu(menu, v, menuInfo);
+        AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
+        RouteAnalyse ra = (RouteAnalyse) lv.getItemAtPosition(acmi.position);
+        if (ra.getChallengeId()==-1||ra.getChallengeId()==null)
+        {
+            menu.add(0, v.getId(), 0, "challenge erstellen");
+        }
         menu.add(0, v.getId(), 0, "details anzeigen");//groupId, itemId, order, title
-        menu.add(0, v.getId(), 0, "challenge erstellen");
     }
 
     public void onProfileButtonClick(View view){
         Intent myIntent = new Intent(this, ProfileActivity.class);
         myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getTitle().toString()) {
+            case ("challenge erstellen"):
+                Intent myIntent = new Intent(context, CreateChallengeActivity.class);
+                myIntent.putExtra("creds", myCredentials);
+                context.startActivity(myIntent);
+                return true;
+            case ("details anzeigen"):
+                Intent myIntent2 = new Intent(context, RouteAnalyseActivity.class);
+                //route und routeanalyse fehlen
+                myIntent2.putExtra("creds", myCredentials);
+                context.startActivity(myIntent2);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }

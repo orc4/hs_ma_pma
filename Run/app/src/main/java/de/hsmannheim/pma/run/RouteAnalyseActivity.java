@@ -2,6 +2,7 @@ package de.hsmannheim.pma.run;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.model.Route;
 import de.hsmannheim.pma.run.model.RouteAnalyse;
 
-public class RouteAnalyseActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class RouteAnalyseActivity extends FragmentActivity implements OnMapReadyCallback {
     protected Route route;
     protected RouteAnalyse routeAnalyse;
     protected MyCredentials myCredentials;
