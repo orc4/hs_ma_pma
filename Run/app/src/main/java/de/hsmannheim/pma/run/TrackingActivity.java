@@ -42,7 +42,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     final int MY_PERMISSIONS_REQUEST = 1;
 
     protected Button startButton;
-    protected Button stopButton;
+
     protected TextView infoText;
     protected Route route;
 
@@ -95,15 +95,17 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
             public void onClick(View view) {
                 startTracking();
                 startTimeUpdate();
+                startButton.setText("Stop");
                 startButton.setBackgroundColor(Color.RED);
+                startButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        stopTracking();
+                    }
+                });
             }
         });
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stopTracking();
-            }
-        });
+
     }
 
 
@@ -115,7 +117,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
 
 
         startButton = (Button) findViewById(R.id.buttonStart);
-        stopButton = (Button) findViewById(R.id.buttonStop);
+
         infoText = (TextView) findViewById(R.id.infoText);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
