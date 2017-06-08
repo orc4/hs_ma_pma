@@ -31,7 +31,7 @@ protected MyCredentials myCredentials;
         challengeHeadLine.setText(challenge.getName());
         int sec = (int) (ra.getTimeInSeconds()%60);
         int min = (int) (ra.getTimeInSeconds()/60);
-        yourTime.setText(min+":"+String.format("%02d", sec));
+        yourTime.setText(String.format("%02d", min)+":"+String.format("%02d", sec));
     }
 
     public void onMainMenuReturn(View view){
