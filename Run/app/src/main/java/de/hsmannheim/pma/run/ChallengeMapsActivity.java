@@ -163,7 +163,6 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     }
 
     protected void startTimeUpdate(){
-        //TODO: kann raus in eine separate Klasse!
         Thread refreshThread = new Thread(new Runnable() {
             TextView textViewTime = (TextView) findViewById(R.id.time);
             int time=0;
