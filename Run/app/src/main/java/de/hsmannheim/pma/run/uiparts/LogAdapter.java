@@ -2,6 +2,7 @@ package de.hsmannheim.pma.run.uiparts;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -82,6 +83,8 @@ public class LogAdapter extends BaseAdapter{
             //TODO - hier eigentlich challange laden und alles dazu hinschreiben!
             holder.img.setImageResource(R.drawable.buschkind);
         }
+
+        rowView.setLongClickable(true); //otherwise contextmenu won't show!
 
         rowView.setOnClickListener(new OnClickListener() {
             @Override

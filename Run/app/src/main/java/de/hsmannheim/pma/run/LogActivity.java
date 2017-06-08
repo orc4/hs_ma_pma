@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ public class LogActivity extends Activity {
         lv = (ListView) findViewById(R.id.logList);
         Log.i(this.getClass().toString(), "handleRoutesReceive: "+allRouteAnalyses.size());
         lv.setAdapter(new LogAdapter(this, allRouteAnalyses, challengeNameOrTrackingArray, dateInformation, prgmImages, myCredentials));
+        registerForContextMenu(lv);
     }
 
     public static int[] prgmImages = {R.drawable.tracking, R.drawable.buschkind, R.drawable.tracking};
@@ -56,7 +60,7 @@ public class LogActivity extends Activity {
         setContentView(R.layout.activity_log);
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
-        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_SHORT).show();
         final WebConnection webConnection = new WebConnectionImpl(myCredentials);
 
 
@@ -75,6 +79,14 @@ public class LogActivity extends Activity {
         logActivity=this;
 
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, v.getId(), 0, "details anzeigen");//groupId, itemId, order, title
+        menu.add(0, v.getId(), 0, "challenge erstellen");
     }
 
     public void onProfileButtonClick(View view){
