@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
@@ -11,15 +12,24 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import de.hsmannheim.pma.run.model.Challenge;
 import de.hsmannheim.pma.run.model.MyCredentials;
 
+import de.hsmannheim.pma.run.model.Route;
+import de.hsmannheim.pma.run.model.RouteAnalyse;
+import de.hsmannheim.pma.run.storage.WebConnection;
+import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 import de.hsmannheim.pma.run.uiparts.MainMenuAdapter;
 
 public class MainMenuActivity extends Activity {
     ListView lv;
     Context context;
     protected MyCredentials myCredentials;
+    protected WebConnection webConnection;
 
+    public final static int RESULT_ID_ROUTE_TRACKING=1;
     public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.tracking, R.drawable.info};
     public static String[] prgmNameList = {"challenges", "log", "tracking", "info"};
 
@@ -36,6 +46,7 @@ public class MainMenuActivity extends Activity {
         setContentView(R.layout.activity_main_menu);
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
+        webConnection = new WebConnectionImpl(myCredentials);
         Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_SHORT).show();
 
         context = this;
@@ -55,5 +66,30 @@ public class MainMenuActivity extends Activity {
         Intent myIntent = new Intent(this, ProfileActivity.class);
         myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RESULT_ID_ROUTE_TRACKING) {
+            //Handle nachdem das Tracking beendet wurde
+            final Route route = data.getParcelableExtra("route");
+            final RouteAnalyse ra = new RouteAnalyse(route);
+            ra.analyseAll();
+            Log.i(this.getClass().toString(), "onActivityResult: Meder Down "+ra.getMeterDown());
+
+            //Alles hochladen
+            Thread t = new Thread() {
+                public void run() {
+                    int routeId = webConnection.addRoute(route);
+                    ra.setRouteId(routeId);
+                    webConnection.addRouteAnalyse(ra);
+                    Log.i(this.getClass().toString(), "onActivityResult: Tracking upload Fertig!");
+
+
+                }
+            };
+            t.start();
+
+            Log.i(this.getClass().toString(), "onActivityResult: hier!");
+        }
     }
 }
