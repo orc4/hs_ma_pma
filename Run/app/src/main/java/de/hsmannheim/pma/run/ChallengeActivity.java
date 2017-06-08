@@ -100,6 +100,13 @@ public class ChallengeActivity extends Activity {
                     }
                 };
                 t.start();
+
+                Intent myIntent = new Intent(context, RouteAnalyseActivity.class);
+                myIntent.putExtra("route",route);
+                myIntent.putExtra("routeAnalyse",ra);
+                myIntent.putExtra("creds",myCredentials);
+                context.startActivity(myIntent);
+
                 Intent intent = new Intent(context, ChallengeDoneActivity.class);
                 intent.putExtra("challenge", challenge);
                 intent.putExtra("routeAnalyse", ra);
