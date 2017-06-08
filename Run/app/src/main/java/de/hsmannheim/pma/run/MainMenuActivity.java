@@ -23,23 +23,22 @@ public class MainMenuActivity extends Activity {
     public static String[] prgmNameList = {"challenges", "log", "tracking", "info"};
     protected MyCredentials myCredentials;
     protected WebConnection webConnection;
-    ListView lv;
-    Context context;
+    protected ListView lv;
+    protected Context context;
+    protected GlobalApplication state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //FIXME: Muss raus - nur zum umgehen von download problemen
-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        //StrictMode.setThreadPolicy(policy);
 
+        state = ((GlobalApplication) getApplicationContext());
 
         Log.i(this.getClass().toString(), "onCreate: create");
         setContentView(R.layout.activity_main_menu);
+        myCredentials=state.getMyCredentials();
 
-        myCredentials = getIntent().getExtras().getParcelable("creds");
         webConnection = new WebConnectionImpl(myCredentials);
-        Toast.makeText(this, myCredentials.getUsername().toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, myCredentials.getUsername(), Toast.LENGTH_SHORT).show();
 
         context = this;
         lv = (ListView) findViewById(R.id.listview);

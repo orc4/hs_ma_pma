@@ -29,6 +29,7 @@ public class LogInActivity extends FragmentActivity {
     EditText password, username;
     Context context = this;
     MyCredentials myCredentials;
+    GlobalApplication state;
 
 
     private Handler handler = new Handler() {
@@ -38,8 +39,9 @@ public class LogInActivity extends FragmentActivity {
             Integer value = b.getInt("KEY");
 
             if (value == 1) {
+                state.setMyCredentials(myCredentials);
                 Intent myIntent = new Intent(context, MainMenuActivity.class);
-                myIntent.putExtra("creds", myCredentials);
+                //myIntent.putExtra("creds", myCredentials);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(myIntent);
             } else {
@@ -54,6 +56,8 @@ public class LogInActivity extends FragmentActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_log_in);
+
+        state = ((GlobalApplication) getApplicationContext());
 
         splashFragment = new SplashFragment();
         logInFragment = new LogInFragment();
@@ -104,5 +108,8 @@ public class LogInActivity extends FragmentActivity {
             }
         };
         t.start();
+
+
+
     }
 }
