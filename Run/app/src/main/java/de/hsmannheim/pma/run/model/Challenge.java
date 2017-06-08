@@ -70,6 +70,10 @@ public class Challenge implements Parcelable {
     }
 
 
+    public boolean isChecked() {
+        return checked;
+    }
+
     public int getId() {
         return id;
     }

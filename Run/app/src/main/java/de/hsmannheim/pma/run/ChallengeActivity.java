@@ -36,26 +36,14 @@ public class ChallengeActivity extends Activity {
         setContentView(R.layout.activity_challenge);
 
         myCredentials = getIntent().getExtras().getParcelable("creds");
-        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_SHORT).show();
         WebConnection webConnection = new WebConnectionImpl(myCredentials);
 
         List<Challenge> allAvailableChallenges = webConnection.getAllChallanges();
-        List<String> challengeNames = new ArrayList<String>();
-        List<String> challengeDescriptions = new ArrayList<String>();
-
-        for(int i = 0; i<allAvailableChallenges.size(); i++)
-        {
-            challengeNames.add(allAvailableChallenges.get(i).getName());
-            challengeDescriptions.add(allAvailableChallenges.get(i).getDescription());
-        }
-        challengeNameArray = new String[allAvailableChallenges.size()];
-        challengeDescriptionArray = new String[allAvailableChallenges.size()];
-        challengeNames.toArray(challengeNameArray);
-        challengeDescriptions.toArray(challengeDescriptionArray);
 
         context = this;
         lv = (ListView) findViewById(R.id.listview);
-        lv.setAdapter(new ChallengeAdapter(this, challengeNameArray, challengeDescriptionArray, prgmImages, myCredentials));
+        lv.setAdapter(new ChallengeAdapter(this, prgmImages,allAvailableChallenges, myCredentials));
     }
 
     public void onProfileButtonClick(View view){

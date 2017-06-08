@@ -63,23 +63,29 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="vertical"
         android:id="@+id/controlColumn">
+
         <Button
+            android:id="@+id/startButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="START"
-            android:onClick="challengeDone"/>
+            android:onClick="challengeDone"
+            android:text="START" />
+
         <TextView
+            android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="00:00"
-            android:textSize="34sp"
-            android:gravity="center"/>
+            android:textSize="34sp" />
+
         <TextView
+            android:id="@+id/infoText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="aktuell 0s besser als Bestzeit"
-            android:textSize="16sp"
-            android:gravity="center"/>
+            android:textSize="16sp" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

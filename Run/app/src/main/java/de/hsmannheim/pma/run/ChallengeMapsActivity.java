@@ -39,7 +39,7 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     final int MY_PERMISSIONS_REQUEST = 1;
 
     protected Button startButton;
-    protected Button stopButton;
+    //protected Button stopButton;
     protected TextView infoText;
     protected Route routeTracked;
     protected Route routeToRun;
@@ -69,14 +69,14 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
 
             } else {
                 // No explanation needed, we can request the permission.
-                Toast.makeText(this, "Permission for Location is Required", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Permission for Location is Required", Toast.LENGTH_SHORT).show();
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST);
             }
             return false;
         } else {
-            Toast.makeText(this, "We Have Permissions", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "We Have Permissions", Toast.LENGTH_SHORT).show();
             return true;
         }
     }
@@ -98,8 +98,8 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     private void initPhase1() {
         setContentView(R.layout.activity_challange_maps);
 
-        startButton = (Button) findViewById(R.id.buttonStart);
-        stopButton = (Button) findViewById(R.id.buttonStop);
+        startButton = (Button) findViewById(R.id.startButton);
+        //stopButton = (Button) findViewById(R.id.buttonStop);
         infoText = (TextView) findViewById(R.id.infoText);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -116,12 +116,12 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
                 startButton.setBackgroundColor(Color.RED);
             }
         });
-        stopButton.setOnClickListener(new View.OnClickListener() {
+        /*stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 stopTracking();
             }
-        });
+        });*/
     }
 
 
