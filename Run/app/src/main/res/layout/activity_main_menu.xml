@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:id="@+id/mainMenuActivity"
+    android:background="@color/colorPrimary"
     tools:context="de.hsmannheim.pma.run.MainMenuActivity">
 
     <TextView
