@@ -220,8 +220,8 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
             distance+=diff;
             long time = dates.get(dates.size()-1).getTime()-dates.get(dates.size()-2).getTime();
             double currSpeedMinPerKm = (time / 1000d / 60d) / ((distance / 1000d) + 0.00001d);
-            String textDistance = "Entferung: "+String.format("%.2f", distance / 1000) + "km";
-            String textSpeed = "Aktuelle Geschwindigkeit: "+currSpeedMinPerKm+"min/km";
+            String textDistance = "Entferung: "+String.format("%.2f", distance / 1000) + "km ";
+            String textSpeed = "Aktuelle Geschwindigkeit: "+String.format("%.2f", currSpeedMinPerKm)+"min/km";
             infoText.setText(textDistance + textSpeed);
         }
         updateMap();
