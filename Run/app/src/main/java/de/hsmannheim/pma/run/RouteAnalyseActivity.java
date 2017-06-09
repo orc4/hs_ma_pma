@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -63,6 +64,9 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
 
 
         setContentView(R.layout.activity_route_analyse);
+        ImageButton userPic = (ImageButton) findViewById(R.id.user);
+        userPic.setImageBitmap(state.getProfielImageBitmap());
+
         usernameText = (TextView) findViewById(R.id.usernameText);
         startDateText = (TextView) findViewById(R.id.startDateText);
         distanceText = (TextView) findViewById(R.id.distanceText);
