@@ -67,13 +67,6 @@
             android:hint="stadtviertel" />
 
         <EditText
-            android:id="@+id/textDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="beschreibung" />
-
-        <EditText
             android:id="@+id/textDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
