@@ -9,20 +9,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import de.hsmannheim.pma.run.ChallengeActivity;
 import de.hsmannheim.pma.run.ChallengeMapsActivity;
-import de.hsmannheim.pma.run.MainMenuActivity;
 import de.hsmannheim.pma.run.R;
 import de.hsmannheim.pma.run.model.Challenge;
-import de.hsmannheim.pma.run.model.MyCredentials;
+import de.hsmannheim.pma.run.storage.ConstantPics;
 
 public class ChallengeAdapter extends BaseAdapter{
 
-    List<Challenge> allAvailableChallenges;
+    List<Challenge> challengeList;
     //String [] result;
     //String [] descriptions;
     Context context;
@@ -30,24 +28,24 @@ public class ChallengeAdapter extends BaseAdapter{
     int [] imageId;
 
     private static LayoutInflater inflater=null;
-    public ChallengeAdapter(Activity activity, int[] prgmImages, List<Challenge> allAvailableChallenges) {
+    public ChallengeAdapter(Activity activity, int[] prgmImages, List<Challenge> challengeList) {
         //result=prgmNameList;
         //descriptions = descriptionList;
         context=activity;
         imageId=prgmImages;
-        this.allAvailableChallenges=allAvailableChallenges;
+        this.challengeList = challengeList;
         this.activity=activity;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
     public int getCount() {
-        return allAvailableChallenges.size();
+        return challengeList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return allAvailableChallenges.get(position);
+        return challengeList.get(position);
     }
 
     @Override
@@ -71,21 +69,21 @@ public class ChallengeAdapter extends BaseAdapter{
         holder.tv2 = (TextView) rowView.findViewById(R.id.challengeDetails);
         holder.img = (ImageView) rowView.findViewById(R.id.challengeImage);
         holder.imgCup=(ImageView) rowView.findViewById(R.id.challengeDone);
-        if(allAvailableChallenges.get(position).isChecked()){
+        if(challengeList.get(position).isChecked()){
             holder.imgCup.setImageResource(R.drawable.done);
         }else{
             holder.imgCup.setImageResource(R.drawable.undone);
         }
 
-        holder.tv.setText(allAvailableChallenges.get(position).getName());
-        holder.tv2.setText(allAvailableChallenges.get(position).getDescription());
-        //FIXME: die noch aus dem web laden
-        holder.img.setImageResource(imageId[(position%2)]);
+        holder.tv.setText(challengeList.get(position).getName());
+        holder.tv2.setText(challengeList.get(position).getDescription());
+
+        holder.img.setImageResource(ConstantPics.getPicId(challengeList.get(position).getPicUrl()));
 
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChallengesClick(allAvailableChallenges.get(position));
+                onChallengesClick(challengeList.get(position));
             }
         });
         return rowView;

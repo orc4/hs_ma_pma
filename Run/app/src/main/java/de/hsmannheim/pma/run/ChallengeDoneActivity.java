@@ -3,11 +3,13 @@ package de.hsmannheim.pma.run;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.hsmannheim.pma.run.model.Challenge;
 import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.model.RouteAnalyse;
+import de.hsmannheim.pma.run.storage.ConstantPics;
 
 public class ChallengeDoneActivity extends Activity {
     protected Challenge challenge;
@@ -25,6 +27,9 @@ public class ChallengeDoneActivity extends Activity {
         TextView challengeHeadLine = (TextView) findViewById(R.id.challengeHeadline);
         TextView yourTime = (TextView) findViewById(R.id.yourTime);
         TextView finishText = (TextView) findViewById(R.id.finishText);
+        ImageView trophy = (ImageView) findViewById(R.id.profileImage);
+        trophy.setImageResource(ConstantPics.getPicTropyId(challenge.getPicUrl()));
+
 
         challengeHeadLine.setText(challenge.getName());
         int sec = (int) (ra.getTimeInSeconds() % 60);

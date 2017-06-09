@@ -29,6 +29,7 @@ public class CreateChallengeActivity extends Activity {
     protected EditText textDescription;
     protected EditText textDone;
     protected Button createButton;
+    protected RadioButton r1, r2, r3;
 
     private Handler handler = new Handler() {
         @Override
@@ -53,6 +54,10 @@ public class CreateChallengeActivity extends Activity {
         textDone = (EditText) findViewById(R.id.textDone);
         createButton = (Button) findViewById(R.id.createButton);
 
+        r1 = (RadioButton) findViewById(R.id.firstImageButton);
+        r2 = (RadioButton) findViewById(R.id.secondImageButton);
+        r3 = (RadioButton) findViewById(R.id.thirdImageButton);
+
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +76,10 @@ public class CreateChallengeActivity extends Activity {
         String viertel = textViertel.getText().toString();
         String description = textDescription.getText().toString();
         String done = textDone.getText().toString();
-
-        String picUrl = "lala";
+        String picUrl = "shoes";
+        if(r1.isChecked())  picUrl = "shoes";
+        if(r2.isChecked())  picUrl = "fernsehturm";
+        if(r3.isChecked())  picUrl = "street";
 
         final Challenge c = new Challenge(name,viertel,description,picUrl,(int)routeAnalyse.getTimeInSeconds(),routeAnalyse.getDistance().intValue(),routeAnalyse.getRouteId(),done);
 
