@@ -9,6 +9,4 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="title_activity_dummy_map">DummyMap</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

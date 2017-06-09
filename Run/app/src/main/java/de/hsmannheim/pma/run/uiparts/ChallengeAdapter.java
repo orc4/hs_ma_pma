@@ -31,7 +31,6 @@ public class ChallengeAdapter extends BaseAdapter{
 
     private static LayoutInflater inflater=null;
     public ChallengeAdapter(Activity activity, int[] prgmImages, List<Challenge> allAvailableChallenges) {
-        // TODO Auto-generated constructor stub
         //result=prgmNameList;
         //descriptions = descriptionList;
         context=activity;
@@ -53,7 +52,6 @@ public class ChallengeAdapter extends BaseAdapter{
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -66,7 +64,6 @@ public class ChallengeAdapter extends BaseAdapter{
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         Holder holder = new Holder();
         View rowView;
         rowView = inflater.inflate(R.layout.challenge_list, null);

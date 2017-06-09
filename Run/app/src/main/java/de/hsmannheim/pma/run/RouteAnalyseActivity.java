@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.model.Route;
 import de.hsmannheim.pma.run.model.RouteAnalyse;
 import de.hsmannheim.pma.run.storage.WebConnection;

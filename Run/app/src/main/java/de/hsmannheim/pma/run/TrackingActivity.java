@@ -39,7 +39,6 @@ import de.hsmannheim.pma.run.utils.DistanceCalculator;
 public class TrackingActivity extends FragmentActivity implements OnMapReadyCallback {
     final int MY_PERMISSIONS_REQUEST = 1;
 
-    //TODO: Location von GPS + Network nehmen und die bessere nehmen
     protected Button startButton;
     protected TextView infoText;
     protected Route route;
@@ -128,7 +127,6 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     }
 
     protected void startTimeUpdate() {
-        //TODO: kann raus in eine separate Klasse!
         Thread refreshThread = new Thread(new Runnable() {
             TextView textViewTime = (TextView) findViewById(R.id.time);
             int time = 0;
@@ -168,7 +166,6 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
-                return;
             }
             // other 'case' lines to check for other
             // permissions this app might request
@@ -275,7 +272,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
             }
         };
         Log.i(this.getClass().toString(), "Location Manager initialisiert");
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10, locationListener);
     }
 

@@ -49,7 +49,6 @@ public class LogAdapter extends BaseAdapter{
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -61,7 +60,6 @@ public class LogAdapter extends BaseAdapter{
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         final Holder holder = new Holder();
         final RouteAnalyse ra = routeAnalyses.get(position);
         View rowView;

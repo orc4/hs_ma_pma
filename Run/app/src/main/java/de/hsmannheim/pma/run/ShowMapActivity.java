@@ -20,7 +20,6 @@ import de.hsmannheim.pma.run.model.Route;
 
 public class ShowMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    //TODO: Location von GPS + Network nehmen und die bessere nehmen
 
     final int MY_PERMISSIONS_REQUEST = 1;
 
