@@ -77,7 +77,7 @@ public class CreateChallengeActivity extends Activity {
         if(r1.isChecked())  picUrl = "shoes";
         if(r2.isChecked())  picUrl = "fernsehturm";
         if(r3.isChecked())  picUrl = "street";
-        
+
         final Challenge c = new Challenge(name,location,picUrl,(int)routeAnalyse.getTimeInSeconds(),routeAnalyse.getDistance().intValue(),routeAnalyse.getRouteId(),done);
 
         Thread t = new Thread() {

@@ -40,7 +40,13 @@ public class ProfileActivity extends Activity {
         final Profil profile = state.getMyProfile();
 
         String fullName = profile.getVorname() + " " +profile.getNachname();
-        String strUserInfo= profile.getAlter() + "\n"+profile.getLieblingsort();
+        String strUserInfo;
+        if(profile.getAlter() <=0){
+            strUserInfo = profile.getLieblingsort();
+        }else{
+            strUserInfo = profile.getAlter() + "\n"+profile.getLieblingsort();
+        }
+
 
         nameTextField.setText(fullName);
         userInfo.setText(strUserInfo);
