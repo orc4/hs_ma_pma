@@ -105,8 +105,8 @@ public class LogInActivity extends FragmentActivity {
         String myUsername = username.getText().toString();
 
         //FIXME: only for debug!
-        myPassword = "muster";
-        myUsername = "aaron";
+        //myPassword = "muster";
+        //myUsername = "aaron";
         myCredentials = new MyCredentials(myUsername, myPassword);
         final WebConnection webConnection = new WebConnectionImpl(myCredentials);
         Thread t = new Thread() {
