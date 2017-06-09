@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 
@@ -78,6 +80,19 @@ public class CreateChallengeActivity extends Activity {
             }
         };
         t.start();
+    }
+
+    public void clickImage1(View view){
+        RadioGroup rg = (RadioGroup) findViewById(R.id.imageGroup);
+        rg.check(R.id.firstImageButton);
+    }
+    public void clickImage2(View view){
+        RadioGroup rg = (RadioGroup) findViewById(R.id.imageGroup);
+        rg.check(R.id.secondImageButton);
+    }
+    public void clickImage3(View view){
+        RadioGroup rg = (RadioGroup) findViewById(R.id.imageGroup);
+        rg.check(R.id.thirdImageButton);
     }
 
 }

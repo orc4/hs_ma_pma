@@ -49,7 +49,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="40dp">
 
         <EditText
             android:id="@+id/textChallangeName"
@@ -80,20 +80,15 @@
             android:hint="text bei bestehen" />
 
 
-        <Button
-            android:id="@+id/createButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.33"
-            android:text="Button" />
 
         <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:weightSum="1"
-                android:layout_marginTop="20dp">
+            android:id="@+id/imageGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="1"
+            android:layout_marginTop="10dp">
 
             <RadioButton
                 android:id="@+id/firstImageButton"
@@ -123,18 +118,30 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/shoes"
-                android:layout_weight="0.33"/>
+                android:layout_weight="0.33"
+                android:clickable="true"
+                android:onClick="clickImage1"/>
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/fernsehturm"
-                android:layout_weight="0.33"/>
+                android:layout_weight="0.33"
+                android:clickable="true"
+                android:onClick="clickImage2"/>
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/street"
-                android:layout_weight="0.33"/>
-
+                android:layout_weight="0.33"
+                android:clickable="true"
+                android:onClick="clickImage3"/>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/createButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="erstellen" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
