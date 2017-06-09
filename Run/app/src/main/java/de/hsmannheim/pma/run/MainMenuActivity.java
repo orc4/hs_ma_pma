@@ -20,8 +20,8 @@ import de.hsmannheim.pma.run.uiparts.MainMenuAdapter;
 
 public class MainMenuActivity extends Activity {
     public final static int RESULT_ID_ROUTE_TRACKING = 1;
-    public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.tracking, R.drawable.info};
-    public static String[] prgmNameList = {"challenges", "log", "tracking", "info"};
+    public static int[] prgmImages = {R.drawable.challenges, R.drawable.tracking, R.drawable.log, R.drawable.info};
+    public static String[] prgmNameList = {"challenges", "tracking", "log", "info"};
     protected WebConnection webConnection;
     protected ListView lv;
     protected Context context;
