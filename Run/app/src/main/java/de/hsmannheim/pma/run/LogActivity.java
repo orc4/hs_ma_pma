@@ -36,6 +36,7 @@ public class LogActivity extends Activity {
     Activity logActivity;
     protected MyCredentials myCredentials;
     protected GlobalApplication state;
+    protected ArrayList<RouteAnalyse> allRouteAnalyses;
 
     private Handler handler = new Handler() {
         @Override
@@ -47,15 +48,14 @@ public class LogActivity extends Activity {
     };
 
     private void handleRoutesReceive(ArrayList<RouteAnalyse> allRouteAnalyses) {
+        this.allRouteAnalyses=allRouteAnalyses;
         lv = (ListView) findViewById(R.id.logList);
         Log.i(this.getClass().toString(), "handleRoutesReceive: "+allRouteAnalyses.size());
-        lv.setAdapter(new LogAdapter(this, allRouteAnalyses, challengeNameOrTrackingArray, dateInformation, prgmImages, myCredentials));
+        lv.setAdapter(new LogAdapter(this, allRouteAnalyses, prgmImages, myCredentials));
         registerForContextMenu(lv);
     }
 
     public static int[] prgmImages = {R.drawable.tracking, R.drawable.buschkind, R.drawable.tracking};
-    public static String[] challengeNameOrTrackingArray = {"Tracking", "Quadratekid", "Tracking"};
-    public static String[] dateInformation = {"07.06.17, 15:00", "07.06.17, 14:00", "07.06.17, 13:00"};
 
 
     @Override
@@ -85,8 +85,6 @@ public class LogActivity extends Activity {
         t.start();
         context = this;
         logActivity=this;
-
-
     }
 
     @Override
@@ -122,10 +120,12 @@ public class LogActivity extends Activity {
                 Log.i("lala", "onContextItemSelected: itemId"+item.getItemId());
 
                 AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-                Log.d("lala", "item pos=" + info.position);
+                Log.i(this.getClass().toString(), "selected item pos=" + info.position);
 
 
-                //route und routeanalyse fehlen
+                RouteAnalyse ra =  allRouteAnalyses.get(info.position);
+
+                myIntent2.putExtra("routeAnalyse", ra);
                 myIntent2.putExtra("creds", myCredentials);
                 context.startActivity(myIntent2);
                 return true;

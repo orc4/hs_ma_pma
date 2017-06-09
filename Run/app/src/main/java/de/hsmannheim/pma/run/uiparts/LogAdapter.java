@@ -25,18 +25,14 @@ import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 
 public class LogAdapter extends BaseAdapter{
     ArrayList<RouteAnalyse> routeAnalyses;
-    String [] result;
-    String [] descriptions;
     Context context;
     int [] imageId;
     MyCredentials myCredentials;
     WebConnection webConnection;
 
     private static LayoutInflater inflater=null;
-    public LogAdapter(Activity activity,  ArrayList<RouteAnalyse> routeAnalyses, String[] challengeOrTrackingList, String[] dateList, int[] prgmImages, MyCredentials cred) {
+    public LogAdapter(Activity activity,  ArrayList<RouteAnalyse> routeAnalyses, int[] prgmImages, MyCredentials cred) {
         this.routeAnalyses = routeAnalyses;
-        result=challengeOrTrackingList;
-        descriptions = dateList;
         context=activity;
         imageId=prgmImages;
         myCredentials = cred;
@@ -92,7 +88,7 @@ public class LogAdapter extends BaseAdapter{
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChallengesClick(result[position]);
+                //onChallengesClick(result[position]);
             }
         });
         return rowView;
