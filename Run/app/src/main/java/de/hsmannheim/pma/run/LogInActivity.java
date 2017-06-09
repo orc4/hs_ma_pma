@@ -1,5 +1,6 @@
 package de.hsmannheim.pma.run;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -37,6 +38,7 @@ public class LogInActivity extends FragmentActivity {
     LogInFragment logInFragment;
     EditText password, username;
     Context context = this;
+    Activity activity;
     MyCredentials myCredentials;
     protected GlobalApplication state;
 
@@ -53,8 +55,9 @@ public class LogInActivity extends FragmentActivity {
                 //myIntent.putExtra("creds", myCredentials);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(myIntent);
+                Toast.makeText(LogInActivity.this,"Login Correct!",Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(context, "login false", Toast.LENGTH_SHORT);
+                Toast.makeText(LogInActivity.this,"Wrong Credentials!",Toast.LENGTH_LONG).show();
             }
         }
     };
@@ -67,7 +70,7 @@ public class LogInActivity extends FragmentActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_log_in);
 
-
+        activity=this;
 
         splashFragment = new SplashFragment();
         logInFragment = new LogInFragment();
