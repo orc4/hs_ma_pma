@@ -39,9 +39,7 @@ public class MainMenuActivity extends Activity {
         ImageButton userPic = (ImageButton) findViewById(R.id.user);
         userPic.setImageBitmap(state.getProfielImageBitmap());
 
-
         webConnection = new WebConnectionImpl(state.getMyCredentials());
-        Toast.makeText(this, state.getMyCredentials().getUsername(), Toast.LENGTH_SHORT).show();
 
         context = this;
         lv = (ListView) findViewById(R.id.listview);

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hsmannheim.pma.run.ChallengeMapsActivity;
 import de.hsmannheim.pma.run.R;
@@ -71,7 +72,7 @@ public class LogAdapter extends BaseAdapter{
         SimpleDateFormat sdfmt = new SimpleDateFormat();
         sdfmt.applyPattern( "E', 'dd. MMM yyyy HH:mm" );
         holder.tv.setText(sdfmt.format(ra.getStartDate()));
-        holder.tv2.setText(ra.getDistance()/1000+"km");
+        holder.tv2.setText(String.format(Locale.GERMAN,"%.2f",ra.getDistance()/1000)+"km");
         if (ra.getChallengeId()==null || ra.getChallengeId()==-1){
             holder.img.setImageResource(R.drawable.tracking);
         }else{
