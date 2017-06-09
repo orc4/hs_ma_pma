@@ -79,7 +79,7 @@ public class LogAdapter extends BaseAdapter{
             holder.img.setImageResource(R.drawable.tracking);
         }else{
             //TODO - hier eigentlich challange laden und alles dazu hinschreiben!
-            holder.img.setImageResource(R.drawable.buschkind);
+            holder.img.setImageResource(R.drawable.challenges);
         }
 
         rowView.setLongClickable(true); //otherwise contextmenu won't show!

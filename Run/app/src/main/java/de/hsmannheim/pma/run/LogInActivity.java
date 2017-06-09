@@ -82,8 +82,7 @@ public class LogInActivity extends FragmentActivity {
         fragmentTransaction.commit();
 
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/AdventPro-Regular.ttf");
-        //new CountDownTimer(3000,1000)
-        new CountDownTimer(1000, 1000) {
+        new CountDownTimer(2500, 1000) {
             public void onTick(long millisUntilFinished) {
             }
 
