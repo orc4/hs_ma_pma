@@ -20,7 +20,6 @@ public class Challenge implements Parcelable {
             };
     protected final String name;
     protected final String location;
-    protected final String description;
     protected final String picUrl;
     protected final String finishText;
     protected final int durationInSec;
@@ -32,7 +31,6 @@ public class Challenge implements Parcelable {
     private Challenge(Parcel in) {
         name = in.readString();
         location = in.readString();
-        description = in.readString();
         picUrl = in.readString();
         durationInSec = in.readInt();
         lengthInM = in.readInt();
@@ -45,7 +43,6 @@ public class Challenge implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(name);
         out.writeString(location);
-        out.writeString(description);
         out.writeString(picUrl);
         out.writeInt(durationInSec);
         out.writeInt(lengthInM);
@@ -59,10 +56,9 @@ public class Challenge implements Parcelable {
         return this.hashCode();
     }
 
-    public Challenge(String name, String location, String description, String picUrl, int durationInSec, int lengthInM, int routeId, String finishText){
+    public Challenge(String name, String location, String picUrl, int durationInSec, int lengthInM, int routeId, String finishText){
         this.name = name;
         this.location=location;
-        this.description=description;
         this.picUrl = picUrl;
         this.durationInSec=durationInSec;
         this.lengthInM=lengthInM;
@@ -93,7 +89,7 @@ public class Challenge implements Parcelable {
     }
 
     public String getDescription() {
-        return description;
+        return location +" • "+""+String.format("%.2f", lengthInM/1000d)+"km";
     }
 
     public String getPicUrl() {
