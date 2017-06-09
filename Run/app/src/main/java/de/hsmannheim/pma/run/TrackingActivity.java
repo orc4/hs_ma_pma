@@ -45,7 +45,6 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     protected Route route;
     protected GoogleMap myMap;
     protected Polyline line;
-    MyCredentials myCredentials;
     LocationManager locationManager;
     LocationListener locationListener;
     boolean tracking = false;
@@ -114,7 +113,6 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         setContentView(R.layout.activity_maps);
         ImageButton userPic = (ImageButton) findViewById(R.id.user);
         userPic.setImageBitmap(state.getProfielImageBitmap());
-        myCredentials = getIntent().getExtras().getParcelable("creds");
 
 
         startButton = (Button) findViewById(R.id.buttonStart);
@@ -283,7 +281,6 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
 
     public void onProfileButtonClick(View view) {
         Intent myIntent = new Intent(this, ProfileActivity.class);
-        myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);
     }
 }

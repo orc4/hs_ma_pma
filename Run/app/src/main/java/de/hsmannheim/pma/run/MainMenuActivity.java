@@ -22,7 +22,6 @@ public class MainMenuActivity extends Activity {
     public final static int RESULT_ID_ROUTE_TRACKING = 1;
     public static int[] prgmImages = {R.drawable.challenges, R.drawable.log, R.drawable.tracking, R.drawable.info};
     public static String[] prgmNameList = {"challenges", "log", "tracking", "info"};
-    protected MyCredentials myCredentials;
     protected WebConnection webConnection;
     protected ListView lv;
     protected Context context;
@@ -40,14 +39,13 @@ public class MainMenuActivity extends Activity {
         ImageButton userPic = (ImageButton) findViewById(R.id.user);
         userPic.setImageBitmap(state.getProfielImageBitmap());
 
-        myCredentials=state.getMyCredentials();
 
-        webConnection = new WebConnectionImpl(myCredentials);
-        Toast.makeText(this, myCredentials.getUsername(), Toast.LENGTH_SHORT).show();
+        webConnection = new WebConnectionImpl(state.getMyCredentials());
+        Toast.makeText(this, state.getMyCredentials().getUsername(), Toast.LENGTH_SHORT).show();
 
         context = this;
         lv = (ListView) findViewById(R.id.listview);
-        lv.setAdapter(new MainMenuAdapter(this, prgmNameList, prgmImages, myCredentials));
+        lv.setAdapter(new MainMenuAdapter(this, prgmNameList, prgmImages));
 
     }
 
@@ -60,7 +58,6 @@ public class MainMenuActivity extends Activity {
 
     public void onProfileButtonClick(View view) {
         Intent myIntent = new Intent(this, ProfileActivity.class);
-        myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);
     }
 
@@ -88,7 +85,6 @@ public class MainMenuActivity extends Activity {
                 Intent myIntent = new Intent(context, RouteAnalyseActivity.class);
                 myIntent.putExtra("route", route);
                 myIntent.putExtra("routeAnalyse", routeAnalyse);
-                myIntent.putExtra("creds", myCredentials);
                 context.startActivity(myIntent);
 
                 Log.i(this.getClass().toString(), "onActivityResult: hier!");

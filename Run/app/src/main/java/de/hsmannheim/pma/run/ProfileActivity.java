@@ -22,7 +22,6 @@ import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.model.Profil;
 
 public class ProfileActivity extends Activity {
-    protected MyCredentials myCredentials;
     protected GlobalApplication state;
 
 
@@ -34,8 +33,6 @@ public class ProfileActivity extends Activity {
         Log.i(this.getClass().toString(), "onCreate: create");
         setContentView(R.layout.activity_profile);
 
-        myCredentials = getIntent().getExtras().getParcelable("creds");
-        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_LONG).show();
         TextView nameTextField = (TextView) findViewById(R.id.nameTextField);
         TextView userInfo = (TextView) findViewById(R.id.userInfo);
         ImageView profileImage;profileImage= (ImageView) findViewById(R.id.profileImage);

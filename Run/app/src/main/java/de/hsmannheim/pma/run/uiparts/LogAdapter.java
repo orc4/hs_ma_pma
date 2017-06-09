@@ -27,18 +27,14 @@ public class LogAdapter extends BaseAdapter{
     ArrayList<RouteAnalyse> routeAnalyses;
     Context context;
     int [] imageId;
-    MyCredentials myCredentials;
-    WebConnection webConnection;
 
     private static LayoutInflater inflater=null;
-    public LogAdapter(Activity activity,  ArrayList<RouteAnalyse> routeAnalyses, int[] prgmImages, MyCredentials cred) {
+    public LogAdapter(Activity activity,  ArrayList<RouteAnalyse> routeAnalyses, int[] prgmImages) {
         this.routeAnalyses = routeAnalyses;
         context=activity;
         imageId=prgmImages;
-        myCredentials = cred;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        webConnection= new WebConnectionImpl(myCredentials);
     }
     @Override
     public int getCount() {

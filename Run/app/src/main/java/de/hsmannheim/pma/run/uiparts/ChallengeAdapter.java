@@ -28,16 +28,14 @@ public class ChallengeAdapter extends BaseAdapter{
     Context context;
     Activity activity;
     int [] imageId;
-    MyCredentials myCredentials;
 
     private static LayoutInflater inflater=null;
-    public ChallengeAdapter(Activity activity, int[] prgmImages, List<Challenge> allAvailableChallenges, MyCredentials cred) {
+    public ChallengeAdapter(Activity activity, int[] prgmImages, List<Challenge> allAvailableChallenges) {
         // TODO Auto-generated constructor stub
         //result=prgmNameList;
         //descriptions = descriptionList;
         context=activity;
         imageId=prgmImages;
-        myCredentials = cred;
         this.allAvailableChallenges=allAvailableChallenges;
         this.activity=activity;
         inflater = ( LayoutInflater )context.
@@ -102,7 +100,6 @@ public class ChallengeAdapter extends BaseAdapter{
 
         Intent intent = new Intent(context,ChallengeMapsActivity.class);
         intent.putExtra("challenge", chosenChallenge);
-        intent.putExtra("credentials",myCredentials);
 
         activity.startActivityForResult(intent, ChallengeActivity.RESULT_ID_ROUTE_TRACKING_CHALLANGE);
     }

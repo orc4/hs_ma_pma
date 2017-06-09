@@ -104,14 +104,11 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         state = ((GlobalApplication) getApplicationContext());
-        challenge = getIntent().getExtras().getParcelable("challenge");
-        final MyCredentials cred = getIntent().getExtras().getParcelable("credentials");
-
         final int routeId = challenge.getRouteId();
 
         Thread t = new Thread() {
             public void run() {
-                routeToRun = new WebConnectionFactory().getWebConnection(cred).getRoute(routeId);
+                routeToRun = new WebConnectionFactory().getWebConnection(state.getMyCredentials()).getRoute(routeId);
 
                 final Message msg = new Message();
                 final Bundle b = new Bundle();

@@ -28,7 +28,6 @@ import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 public class RouteAnalyseActivity extends FragmentActivity implements OnMapReadyCallback {
     protected Route route;
     protected RouteAnalyse routeAnalyse;
-    protected MyCredentials myCredentials;
     protected GoogleMap myMap;
     protected Polyline line;
     protected WebConnection webConnection;
@@ -61,8 +60,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
         state = ((GlobalApplication) getApplicationContext());
         route = getIntent().getExtras().getParcelable("route");
         routeAnalyse = getIntent().getExtras().getParcelable("routeAnalyse");
-        myCredentials = getIntent().getExtras().getParcelable("creds");
-        webConnection = new WebConnectionImpl(myCredentials);
+        webConnection = new WebConnectionImpl(state.getMyCredentials());
 
 
         setContentView(R.layout.activity_route_analyse);
@@ -121,7 +119,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
 
     protected void refreshValues() {
         //prepare Values
-        String strUsername = "username: " + myCredentials.getUsername();
+        String strUsername = "username: " + state.getMyCredentials().getUsername();
         SimpleDateFormat sdfmt = new SimpleDateFormat();
         sdfmt.applyPattern("E', 'dd. MMM yyyy HH:mm");
         String strStartDateText = sdfmt.format(routeAnalyse.getStartDate());

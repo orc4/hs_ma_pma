@@ -29,9 +29,8 @@ public class MainMenuAdapter extends BaseAdapter{
     Context context;
     Activity activity;
     int [] imageId;
-    MyCredentials myCredentials;
     private static LayoutInflater inflater=null;
-    public MainMenuAdapter(Activity activity, String[] prgmNameList, int[] prgmImages, MyCredentials credentials) {
+    public MainMenuAdapter(Activity activity, String[] prgmNameList, int[] prgmImages) {
         // TODO Auto-generated constructor stub
         result=prgmNameList;
         context=activity;
@@ -39,7 +38,6 @@ public class MainMenuAdapter extends BaseAdapter{
         imageId=prgmImages;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        myCredentials = credentials;
     }
     @Override
     public int getCount() {
@@ -101,13 +99,11 @@ public class MainMenuAdapter extends BaseAdapter{
 
     public void onChallengesClick(){
         Intent myIntent = new Intent(context, ChallengeActivity.class);
-        myIntent.putExtra("creds", myCredentials);
         context.startActivity(myIntent);
     }
 
     public void onLogClick(){
         Intent myIntent = new Intent(context, LogActivity.class);
-        myIntent.putExtra("creds", myCredentials);
         context.startActivity(myIntent);
     }
 
@@ -118,7 +114,6 @@ public class MainMenuAdapter extends BaseAdapter{
 
     public void onTrackingClick(){
         Intent myIntent = new Intent(context, TrackingActivity.class);
-        myIntent.putExtra("creds", myCredentials);
         //context.startActivity(myIntent);
         activity.startActivityForResult(myIntent, MainMenuActivity.RESULT_ID_ROUTE_TRACKING);
 
