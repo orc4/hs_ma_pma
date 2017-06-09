@@ -33,6 +33,7 @@ import java.util.List;
 
 import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.model.Route;
+import de.hsmannheim.pma.run.utils.DistanceCalculator;
 
 
 public class TrackingActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -50,6 +51,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     boolean tracking = false;
     private int count = 0;
     protected GlobalApplication state;
+    protected double distance;
 
     private boolean check_permissions() {
         if (ContextCompat.checkSelfPermission(this,
@@ -211,13 +213,23 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         //Info Ausgabe auf dem Display
         Log.i(this.getClass().toString(), "handleNewLocation: " + location.getLatitude() + "/" + location.getLongitude() + "/" + location.getAltitude() + "üNN");
         count++;
-        infoText.setText(count + "New Location " + location.getLatitude() + "/" + location.getLongitude() + "/" + location.getAltitude() + "üNN");
 
         //Add to Route Object
         LatLng actualPosition = new LatLng(location.getLatitude(), location.getLongitude());
         route.addWaypoint(new Date(), actualPosition, location.getAltitude());
-        updateMap();
 
+        List<LatLng> points = route.getWayPoints();
+        List<Date> dates = route.getWayPointsDates();
+        if(points.size()>1){
+            double diff = DistanceCalculator.distanceMeter(points.get(points.size()-1),points.get(points.size()-2));
+            distance+=diff;
+            long time = dates.get(dates.size()-1).getTime()-dates.get(dates.size()-2).getTime();
+            double currSpeedMinPerKm = (time / 1000d / 60d) / ((distance / 1000d) + 0.00001d);
+            String textDistance = "Entferung: "+String.format("%.2f", distance / 1000) + "km";
+            String textSpeed = "Aktuelle Geschwindigkeit: "+currSpeedMinPerKm+"min/km";
+            infoText.setText(textDistance + textSpeed);
+        }
+        updateMap();
     }
 
     private void stopTracking() {
@@ -243,6 +255,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     private void startTracking() {
         tracking = true;
         route = new Route(new Date());
+        distance=0d;
 
         // Acquire a reference to the system Location Manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);

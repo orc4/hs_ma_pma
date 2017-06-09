@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="aktuell 0s besser als Bestzeit"
+            android:text=""
             android:textSize="16sp" />
     </LinearLayout>
 
