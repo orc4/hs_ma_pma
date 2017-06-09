@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +35,8 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
     protected boolean map_Ready = false;
     protected GlobalApplication state;
 
+
+    protected TextView analyseHeadline;
     protected TextView usernameText;
     protected TextView startDateText;
     protected TextView distanceText;
@@ -64,7 +67,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
 
 
         setContentView(R.layout.activity_route_analyse);
-        ImageButton userPic = (ImageButton) findViewById(R.id.user);
+        ImageView userPic = (ImageView) findViewById(R.id.user);
         userPic.setImageBitmap(state.getProfielImageBitmap());
 
         usernameText = (TextView) findViewById(R.id.usernameText);
@@ -75,6 +78,13 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
         speedText = (TextView) findViewById(R.id.speedText);
         meterUpText = (TextView) findViewById(R.id.meterUpText);
         meterDownText = (TextView) findViewById(R.id.meterDownText);
+
+        analyseHeadline = (TextView) findViewById(R.id.analyseHeadline);
+        if(routeAnalyse.getChallengeId()!=null&&routeAnalyse.getChallengeId()>0){
+            analyseHeadline.setText("challange");
+        }else{
+            analyseHeadline.setText("tracking");
+        }
 
         if (route == null && routeAnalyse.getRouteId() != null && routeAnalyse.getRouteId() > 0) {
             Log.i(this.getClass().toString(), "onCreate: Route separat laden");
