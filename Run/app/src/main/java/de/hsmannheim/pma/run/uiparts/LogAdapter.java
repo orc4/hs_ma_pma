@@ -2,6 +2,7 @@ package de.hsmannheim.pma.run.uiparts;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class LogAdapter extends BaseAdapter{
     private static LayoutInflater inflater=null;
     public LogAdapter(Activity activity,  ArrayList<RouteAnalyse> routeAnalyses, int[] prgmImages) {
         this.routeAnalyses = routeAnalyses;
+        Log.i(this.getClass().toString(), "LogAdapter: Elemente in Liste: "+routeAnalyses.size());
         context=activity;
         imageId=prgmImages;
         inflater = ( LayoutInflater )context.
@@ -60,6 +62,7 @@ public class LogAdapter extends BaseAdapter{
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        Log.i(this.getClass().toString(), "getView: An der Position: "+position);
         final Holder holder = new Holder();
         final RouteAnalyse ra = routeAnalyses.get(position);
         View rowView;
@@ -70,6 +73,7 @@ public class LogAdapter extends BaseAdapter{
         SimpleDateFormat sdfmt = new SimpleDateFormat();
         sdfmt.applyPattern( "E', 'dd. MMM yyyy HH:mm" );
         holder.tv.setText(sdfmt.format(ra.getStartDate()));
+        Log.i(this.getClass().toString(), "getView: startDate:"+sdfmt.format(ra.getStartDate()));
         holder.tv2.setText(String.format(Locale.GERMAN,"%.2f",ra.getDistance()/1000)+"km");
         if (ra.getChallengeId()==null || ra.getChallengeId()==-1){
             holder.img.setImageResource(R.drawable.tracking);

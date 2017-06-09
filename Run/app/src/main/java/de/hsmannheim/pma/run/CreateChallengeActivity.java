@@ -26,9 +26,9 @@ public class CreateChallengeActivity extends Activity {
     protected RouteAnalyse routeAnalyse;
     protected EditText textChallangeName;
     protected EditText textViertel;
-    protected EditText textDescription;
     protected EditText textDone;
     protected Button createButton;
+    protected RadioButton r1, r2, r3;
 
     private Handler handler = new Handler() {
         @Override
@@ -49,9 +49,12 @@ public class CreateChallengeActivity extends Activity {
         userPic.setImageBitmap(state.getProfielImageBitmap());
         textChallangeName = (EditText) findViewById(R.id.textChallangeName);
         textViertel = (EditText) findViewById(R.id.textViertel);
-        textDescription = (EditText) findViewById(R.id.textDescription);
         textDone = (EditText) findViewById(R.id.textDone);
         createButton = (Button) findViewById(R.id.createButton);
+
+        r1 = (RadioButton) findViewById(R.id.firstImageButton);
+        r2 = (RadioButton) findViewById(R.id.secondImageButton);
+        r3 = (RadioButton) findViewById(R.id.thirdImageButton);
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,13 +71,14 @@ public class CreateChallengeActivity extends Activity {
     }
     public void handleCreateChallange(){
         String name = textChallangeName.getText().toString();
-        String viertel = textViertel.getText().toString();
-        String description = textDescription.getText().toString();
+        String location = textViertel.getText().toString();
         String done = textDone.getText().toString();
-
-        String picUrl = "lala";
-
-        final Challenge c = new Challenge(name,viertel,description,picUrl,(int)routeAnalyse.getTimeInSeconds(),routeAnalyse.getDistance().intValue(),routeAnalyse.getRouteId(),done);
+        String picUrl = "shoes";
+        if(r1.isChecked())  picUrl = "shoes";
+        if(r2.isChecked())  picUrl = "fernsehturm";
+        if(r3.isChecked())  picUrl = "street";
+        
+        final Challenge c = new Challenge(name,location,picUrl,(int)routeAnalyse.getTimeInSeconds(),routeAnalyse.getDistance().intValue(),routeAnalyse.getRouteId(),done);
 
         Thread t = new Thread() {
             public void run() {
@@ -83,6 +87,8 @@ public class CreateChallengeActivity extends Activity {
             }
         };
         t.start();
+
+
     }
 
     public void clickImage1(View view){
