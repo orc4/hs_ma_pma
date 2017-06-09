@@ -133,7 +133,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
     protected void refreshValues() {
         //prepare Values
         String strUsername = "user: " + state.getMyCredentials().getUsername();
-        SimpleDateFormat sdfmt = new SimpleDateFormat();
+        SimpleDateFormat sdfmt = new SimpleDateFormat();g
         sdfmt.applyPattern("E', 'dd. MMM yyyy HH:mm");
         String strStartDateText = sdfmt.format(routeAnalyse.getStartDate());
         String strDistanceText = "distance: "+ String.format("%.2f", routeAnalyse.getDistance() / 1000) + "km";
