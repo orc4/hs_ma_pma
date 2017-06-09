@@ -108,17 +108,17 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/hafenkoenig"
+                android:src="@drawable/shoes"
                 android:layout_weight="0.33"/>
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/hafenkoenig"
+                android:src="@drawable/fernsehturm"
                 android:layout_weight="0.33"/>
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/hafenkoenig"
+                android:src="@drawable/street"
                 android:layout_weight="0.33"/>
         </LinearLayout>
     </LinearLayout>
