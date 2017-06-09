@@ -30,7 +30,6 @@ public class ChallengeActivity extends Activity {
     protected Context context;
     protected Activity challengeActivity;
     protected WebConnection webConnection;
-    protected MyCredentials myCredentials;
     protected GlobalApplication state;
 
     public static int[] prgmImages = {R.drawable.buschkind, R.drawable.quadratekid};
@@ -45,7 +44,7 @@ public class ChallengeActivity extends Activity {
 
     protected void handleChallengeReceive(ArrayList<Challenge> allAvailableChallenges){
         lv = (ListView) findViewById(R.id.listview);
-        lv.setAdapter(new ChallengeAdapter(challengeActivity, prgmImages,allAvailableChallenges, myCredentials));
+        lv.setAdapter(new ChallengeAdapter(challengeActivity, prgmImages,allAvailableChallenges));
     }
 
     @Override
@@ -57,10 +56,8 @@ public class ChallengeActivity extends Activity {
         ImageButton userPic = (ImageButton) findViewById(R.id.user);
         userPic.setImageBitmap(state.getProfielImageBitmap());
 
-        myCredentials = getIntent().getExtras().getParcelable("creds");
-        webConnection = new WebConnectionImpl(myCredentials);
+        webConnection = new WebConnectionImpl(state.getMyCredentials());
 
-        final WebConnection webConnection = new WebConnectionImpl(myCredentials);
         Thread t = new Thread() {
             public void run() {
                 final ArrayList<Challenge> allAvailableChallenges = webConnection.getAllChallanges();
@@ -80,7 +77,6 @@ public class ChallengeActivity extends Activity {
 
     public void onProfileButtonClick(View view){
         Intent myIntent = new Intent(this, ProfileActivity.class);
-        myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -110,13 +106,11 @@ public class ChallengeActivity extends Activity {
                 Intent myIntent = new Intent(context, RouteAnalyseActivity.class);
                 myIntent.putExtra("route",route);
                 myIntent.putExtra("routeAnalyse",ra);
-                myIntent.putExtra("creds",myCredentials);
                 context.startActivity(myIntent);
 
                 Intent intent = new Intent(context, ChallengeDoneActivity.class);
                 intent.putExtra("challenge", challenge);
                 intent.putExtra("routeAnalyse", ra);
-                intent.putExtra("creds",myCredentials);
                 context.startActivity(intent);
 
                 Log.i(this.getClass().toString(), "onActivityResult: hier!");

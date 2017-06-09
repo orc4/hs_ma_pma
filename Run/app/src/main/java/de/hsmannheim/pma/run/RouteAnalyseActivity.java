@@ -28,7 +28,6 @@ import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 public class RouteAnalyseActivity extends FragmentActivity implements OnMapReadyCallback {
     protected Route route;
     protected RouteAnalyse routeAnalyse;
-    protected MyCredentials myCredentials;
     protected GoogleMap myMap;
     protected Polyline line;
     protected WebConnection webConnection;
@@ -49,6 +48,9 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
         public void handleMessage(Message msg) {
             Bundle b = msg.getData();
             route = b.getParcelable("route");
+            if (route != null) {
+                updateMap();
+            }
         }
     };
 
@@ -58,8 +60,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
         state = ((GlobalApplication) getApplicationContext());
         route = getIntent().getExtras().getParcelable("route");
         routeAnalyse = getIntent().getExtras().getParcelable("routeAnalyse");
-        myCredentials = getIntent().getExtras().getParcelable("creds");
-        webConnection = new WebConnectionImpl(myCredentials);
+        webConnection = new WebConnectionImpl(state.getMyCredentials());
 
 
         setContentView(R.layout.activity_route_analyse);
@@ -71,9 +72,9 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
         speedText = (TextView) findViewById(R.id.speedText);
         meterUpText = (TextView) findViewById(R.id.meterUpText);
         meterDownText = (TextView) findViewById(R.id.meterDownText);
-        //TODO: Schauen ob route null ist! - Wenn ja aus RouteAnalyse die routeId holen und laden
 
         if (route == null && routeAnalyse.getRouteId() != null && routeAnalyse.getRouteId() > 0) {
+            Log.i(this.getClass().toString(), "onCreate: Route separat laden");
             Thread t = new Thread() {
                 public void run() {
                     final Route route = webConnection.getRoute(routeAnalyse.getRouteId());
@@ -112,14 +113,13 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
         List<LatLng> points = route.getWayPoints();
         line.setPoints(points);
         LatLng lastPoint = points.get(points.size() - 1);
-        //TODO: Mov zu einem Punkt dazwischen - und zoom einigermaßen anpassen!!!
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastPoint, 15));
     }
 
 
     protected void refreshValues() {
         //prepare Values
-        String strUsername = "username: " + myCredentials.getUsername();
+        String strUsername = "username: " + state.getMyCredentials().getUsername();
         SimpleDateFormat sdfmt = new SimpleDateFormat();
         sdfmt.applyPattern("E', 'dd. MMM yyyy HH:mm");
         String strStartDateText = sdfmt.format(routeAnalyse.getStartDate());

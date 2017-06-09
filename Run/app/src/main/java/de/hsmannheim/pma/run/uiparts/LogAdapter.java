@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hsmannheim.pma.run.ChallengeMapsActivity;
 import de.hsmannheim.pma.run.R;
@@ -25,24 +26,16 @@ import de.hsmannheim.pma.run.storage.WebConnectionImpl;
 
 public class LogAdapter extends BaseAdapter{
     ArrayList<RouteAnalyse> routeAnalyses;
-    String [] result;
-    String [] descriptions;
     Context context;
     int [] imageId;
-    MyCredentials myCredentials;
-    WebConnection webConnection;
 
     private static LayoutInflater inflater=null;
-    public LogAdapter(Activity activity,  ArrayList<RouteAnalyse> routeAnalyses, String[] challengeOrTrackingList, String[] dateList, int[] prgmImages, MyCredentials cred) {
+    public LogAdapter(Activity activity,  ArrayList<RouteAnalyse> routeAnalyses, int[] prgmImages) {
         this.routeAnalyses = routeAnalyses;
-        result=challengeOrTrackingList;
-        descriptions = dateList;
         context=activity;
         imageId=prgmImages;
-        myCredentials = cred;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        webConnection= new WebConnectionImpl(myCredentials);
     }
     @Override
     public int getCount() {
@@ -79,7 +72,7 @@ public class LogAdapter extends BaseAdapter{
         SimpleDateFormat sdfmt = new SimpleDateFormat();
         sdfmt.applyPattern( "E', 'dd. MMM yyyy HH:mm" );
         holder.tv.setText(sdfmt.format(ra.getStartDate()));
-        holder.tv2.setText(ra.getDistance()/1000+"km");
+        holder.tv2.setText(String.format(Locale.GERMAN,"%.2f",ra.getDistance()/1000)+"km");
         if (ra.getChallengeId()==null || ra.getChallengeId()==-1){
             holder.img.setImageResource(R.drawable.tracking);
         }else{
@@ -92,7 +85,7 @@ public class LogAdapter extends BaseAdapter{
         rowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onChallengesClick(result[position]);
+                //onChallengesClick(result[position]);
             }
         });
         return rowView;

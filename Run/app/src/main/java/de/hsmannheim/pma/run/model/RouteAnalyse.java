@@ -2,7 +2,6 @@ package de.hsmannheim.pma.run.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -14,6 +13,7 @@ import de.hsmannheim.pma.run.utils.DistanceCalculator;
 
 /**
  * Created by aaron on 30.05.17.
+ * Analysieren der Route
  */
 
 public class RouteAnalyse implements Parcelable {
@@ -36,16 +36,10 @@ public class RouteAnalyse implements Parcelable {
     private Double meterUp;
     private Double meterDown;
     private long time;
-    private int routeId=0;
-    private int challengeId=0;
+    private int routeId = 0;
+    private int challengeId = 0;
     private String username;
     private Date startDate;
-
-    public String toString(){
-        String str= "distance "+distance+", pace "+paceMinPerKm+", speed "+speedKmh+", meterUp " +
-                ""+meterUp+", meterDown "+meterDown;
-        return str;
-    }
 
     public RouteAnalyse(Route route) {
 
@@ -70,6 +64,12 @@ public class RouteAnalyse implements Parcelable {
         challengeId = in.readInt();
         username = in.readString();
         startDate = (Date) in.readSerializable();
+
+    }
+
+    public String toString() {
+        return  "distance " + distance + ", pace " + paceMinPerKm + ", speed " + speedKmh + ", meterUp " +
+                "" + meterUp + ", meterDown " + meterDown;
 
     }
 
@@ -98,9 +98,9 @@ public class RouteAnalyse implements Parcelable {
         return startDate;
     }
 
-    public void analyseSpeed() {
-        speedKmh = (distance / 1000d) / (time / 1000d) * 3.6;
-        paceMinPerKm = (time / 1000 / 60) / ((distance / 1000)+0.00001);
+    private void analyseSpeed() {
+        speedKmh = (distance / 1000d) / (time / 1000d / 3600d);
+        paceMinPerKm = (time / 1000d / 60d) / ((distance / 1000d) + 0.00001d);
     }
 
     public Double getSpeedKmh() {
@@ -135,7 +135,7 @@ public class RouteAnalyse implements Parcelable {
         this.challengeId = challangeId;
     }
 
-    public void analyseDistance(Route route) {
+    private void analyseDistance(Route route) {
         distance = 0d;
         boolean first = true;
         LatLng lastPoint = null;
@@ -149,7 +149,7 @@ public class RouteAnalyse implements Parcelable {
         }
     }
 
-    public void analyseHigh(Route route) {
+    private void analyseHigh(Route route) {
         meterDown = 0d;
         meterUp = 0d;
         boolean first = true;
@@ -162,14 +162,14 @@ public class RouteAnalyse implements Parcelable {
                 if (diff > 0) {
                     meterUp += diff;
                 } else {
-                    meterDown += diff;
+                    meterDown += -diff;
                 }
             }
             lastHigh = high;
         }
     }
 
-    public void analyseTime(Route route) {
+    private void analyseTime(Route route) {
         List<Date> points = route.getWayPointsDates();
         Date end = points.get(points.size() - 1);
         time = end.getTime() - route.getStartDate().getTime();

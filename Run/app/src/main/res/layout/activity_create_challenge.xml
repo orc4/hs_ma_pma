@@ -52,28 +52,42 @@
         android:layout_marginTop="50dp">
 
         <EditText
+            android:id="@+id/textChallangeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="challenge-name"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:hint="challenge-name" />
+
         <EditText
+            android:id="@+id/textViertel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="stadtviertel"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:hint="stadtviertel" />
+
         <EditText
+            android:id="@+id/textDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="beschreibung"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:hint="beschreibung" />
+
         <EditText
+            android:id="@+id/textDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="text bei bestehen"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:hint="text bei bestehen" />
 
 
-            <RadioGroup
+        <Button
+            android:id="@+id/createButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.33"
+            android:text="Button" />
+
+        <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -120,6 +134,7 @@
                 android:layout_height="80dp"
                 android:src="@drawable/street"
                 android:layout_weight="0.33"/>
+
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

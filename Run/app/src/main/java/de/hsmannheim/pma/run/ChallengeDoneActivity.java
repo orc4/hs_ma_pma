@@ -10,7 +10,6 @@ import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.model.RouteAnalyse;
 
 public class ChallengeDoneActivity extends Activity {
-    protected MyCredentials myCredentials;
     protected Challenge challenge;
     protected RouteAnalyse ra;
     protected GlobalApplication state;
@@ -20,7 +19,6 @@ public class ChallengeDoneActivity extends Activity {
         super.onCreate(savedInstanceState);
         state = ((GlobalApplication) getApplicationContext());
         setContentView(R.layout.activity_challenge_done);
-        myCredentials = getIntent().getExtras().getParcelable("creds");
         challenge = getIntent().getExtras().getParcelable("challenge");
         ra = getIntent().getExtras().getParcelable("routeAnalyse");
 

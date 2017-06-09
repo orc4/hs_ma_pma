@@ -34,8 +34,8 @@ public class LogActivity extends Activity {
     ListView lv;
     Context context;
     Activity logActivity;
-    protected MyCredentials myCredentials;
     protected GlobalApplication state;
+    protected ArrayList<RouteAnalyse> allRouteAnalyses;
 
     private Handler handler = new Handler() {
         @Override
@@ -47,15 +47,14 @@ public class LogActivity extends Activity {
     };
 
     private void handleRoutesReceive(ArrayList<RouteAnalyse> allRouteAnalyses) {
+        this.allRouteAnalyses=allRouteAnalyses;
         lv = (ListView) findViewById(R.id.logList);
         Log.i(this.getClass().toString(), "handleRoutesReceive: "+allRouteAnalyses.size());
-        lv.setAdapter(new LogAdapter(this, allRouteAnalyses, challengeNameOrTrackingArray, dateInformation, prgmImages, myCredentials));
+        lv.setAdapter(new LogAdapter(this, allRouteAnalyses, prgmImages));
         registerForContextMenu(lv);
     }
 
     public static int[] prgmImages = {R.drawable.tracking, R.drawable.buschkind, R.drawable.tracking};
-    public static String[] challengeNameOrTrackingArray = {"Tracking", "Quadratekid", "Tracking"};
-    public static String[] dateInformation = {"07.06.17, 15:00", "07.06.17, 14:00", "07.06.17, 13:00"};
 
 
     @Override
@@ -67,9 +66,7 @@ public class LogActivity extends Activity {
         ImageButton userPic = (ImageButton) findViewById(R.id.user);
         userPic.setImageBitmap(state.getProfielImageBitmap());
 
-        myCredentials = getIntent().getExtras().getParcelable("creds");
-        Toast.makeText(this, myCredentials.getUsername().toString(),Toast.LENGTH_SHORT).show();
-        final WebConnection webConnection = new WebConnectionImpl(myCredentials);
+        final WebConnection webConnection = new WebConnectionImpl(state.getMyCredentials());
 
 
         Thread t = new Thread() {
@@ -85,8 +82,6 @@ public class LogActivity extends Activity {
         t.start();
         context = this;
         logActivity=this;
-
-
     }
 
     @Override
@@ -105,28 +100,25 @@ public class LogActivity extends Activity {
 
     public void onProfileButtonClick(View view){
         Intent myIntent = new Intent(this, ProfileActivity.class);
-        myIntent.putExtra("creds", myCredentials);
         startActivity(myIntent);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        RouteAnalyse ra =  allRouteAnalyses.get(info.position);
         switch (item.getTitle().toString()) {
             case ("challenge erstellen"):
                 Intent myIntent = new Intent(context, CreateChallengeActivity.class);
-                myIntent.putExtra("creds", myCredentials);
+                Log.i(this.getClass().toString(), "selected item pos=" + info.position +" show Details");
+                myIntent.putExtra("routeAnalyse", ra);
                 context.startActivity(myIntent);
                 return true;
+
             case ("details anzeigen"):
                 Intent myIntent2 = new Intent(context, RouteAnalyseActivity.class);
-                Log.i("lala", "onContextItemSelected: itemId"+item.getItemId());
-
-                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-                Log.d("lala", "item pos=" + info.position);
-
-
-                //route und routeanalyse fehlen
-                myIntent2.putExtra("creds", myCredentials);
+                Log.i(this.getClass().toString(), "selected item pos=" + info.position +" show Details");
+                myIntent2.putExtra("routeAnalyse", ra);
                 context.startActivity(myIntent2);
                 return true;
             default:
