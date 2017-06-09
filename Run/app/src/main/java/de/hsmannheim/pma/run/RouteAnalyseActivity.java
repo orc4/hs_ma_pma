@@ -81,7 +81,7 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
 
         analyseHeadline = (TextView) findViewById(R.id.analyseHeadline);
         if(routeAnalyse.getChallengeId()!=null&&routeAnalyse.getChallengeId()>0){
-            analyseHeadline.setText("challange");
+            analyseHeadline.setText("challenge");
         }else{
             analyseHeadline.setText("tracking");
         }
