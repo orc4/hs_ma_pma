@@ -119,18 +119,18 @@ public class RouteAnalyseActivity extends FragmentActivity implements OnMapReady
 
     protected void refreshValues() {
         //prepare Values
-        String strUsername = "username: " + state.getMyCredentials().getUsername();
+        String strUsername = "user: " + state.getMyCredentials().getUsername();
         SimpleDateFormat sdfmt = new SimpleDateFormat();
         sdfmt.applyPattern("E', 'dd. MMM yyyy HH:mm");
         String strStartDateText = sdfmt.format(routeAnalyse.getStartDate());
-        String strDistanceText = String.format("%.2f", routeAnalyse.getDistance() / 1000) + "km";
+        String strDistanceText = "distance: "+ String.format("%.2f", routeAnalyse.getDistance() / 1000) + "km";
         int sec = (int) (routeAnalyse.getTimeInSeconds() % 60);
         int min = (int) (routeAnalyse.getTimeInSeconds() / 60);
-        String strTimeText = String.format("%02d", min) + ":" + String.format("%02d", sec);
-        String strPaceText = String.format("%.2f", routeAnalyse.getPaceMinPerKm()) + "min/km";
-        String strSpeedText = String.format("%.2f", routeAnalyse.getSpeedKmh()) + "km/h";
-        String strMeterUpText = String.format("%.1f", routeAnalyse.getMeterUp()) + "m up";
-        String strMeterDownText = String.format("%.1f", routeAnalyse.getMeterDown()) + "m down";
+        String strTimeText = "duration: " +String.format("%02d", min) + ":" + String.format("%02d", sec) +"min";
+        String strPaceText = "pace: "+String.format("%.2f", routeAnalyse.getPaceMinPerKm()) + "min/km";
+        String strSpeedText = "speed: "+String.format("%.2f", routeAnalyse.getSpeedKmh()) + "km/h";
+        String strMeterUpText = "high: "+String.format("%.1f", routeAnalyse.getMeterUp()) + "m up";
+        String strMeterDownText = "high: " +String.format("%.1f", routeAnalyse.getMeterDown()) + "m down";
 
 
         //Set values
