@@ -20,7 +20,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +36,6 @@ import java.util.Date;
 import java.util.List;
 
 import de.hsmannheim.pma.run.model.Challenge;
-import de.hsmannheim.pma.run.model.MyCredentials;
 import de.hsmannheim.pma.run.model.Route;
 import de.hsmannheim.pma.run.storage.WebConnectionFactory;
 import de.hsmannheim.pma.run.utils.DistanceCalculator;
@@ -244,20 +242,23 @@ public class ChallengeMapsActivity extends FragmentActivity implements OnMapRead
             double distance = DistanceCalculator.distanceMeter(currentPos, list.get(index));
             Log.i(this.getClass().toString(), "checkRouteToRun: Distance: " + distance + "m");
             if (distance < maxDiff) {
-                long timeDiff = (((now.getTime() - startDateNew.getTime()) - (listTimes.get(index).getTime() - startDateOld.getTime())) / 1000);
-                if (timeDiff < 0) {
-                    infoText.setTextColor(Color.GREEN);
-                    infoText.setText("aktuell " + (-timeDiff) + " sec schneller als die Bestzeit");
-                } else {
-                    infoText.setTextColor(Color.RED);
-                    infoText.setText("aktuell " + timeDiff + " sec langsamer als die Bestzeit");
+                if (listTimes!=null&&listTimes.size() > index) {
+                    long timeDiff = (((now.getTime() - startDateNew.getTime()) - (listTimes.get(index).getTime() - startDateOld.getTime())) / 1000);
+                    if (timeDiff < 0) {
+                        infoText.setTextColor(Color.GREEN);
+                        infoText.setText("aktuell " + (-timeDiff) + " sec schneller als die Bestzeit");
+                    } else {
+                        infoText.setTextColor(Color.RED);
+                        infoText.setText("aktuell " + timeDiff + " sec langsamer als die Bestzeit");
+                    }
                 }
 
                 list.remove(index);
+                if(listTimes!=null&&listTimes.size()>index)
                 listTimes.remove(index);
                 if (!lastDeleted && index > 0) {
                     list.remove(index - 1);
-                    listTimes.remove(index - 1);
+                    if(listTimes!=null&&listTimes.size()>(index-1)) listTimes.remove(index - 1);
                     index--;
                 }
                 seconLastDeleted = lastDeleted;
